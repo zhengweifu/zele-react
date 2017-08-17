@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 
-import { GUTTER } from '../styles/constants';
+import { GUTTER } from '../../styles/constants';
 
-require('../csses/clearfix.css');
+require('../../csses/clearfix.css');
 
 function getStyles(props) {
 	return {

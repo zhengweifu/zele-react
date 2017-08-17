@@ -15,11 +15,11 @@ export const BORDER_RADIUS = {
 
 export const GUTTER = 10;
 
-export const FONT_SIZE_SMALL = 12;
+export const FONT_SIZE_SMALL = 10;
 
-export const FONT_SIZE_DEFAULT = 14;
+export const FONT_SIZE_DEFAULT = 12;
 
-export const FONT_SIZE_BIG = 16;
+export const FONT_SIZE_BIG = 14;
 
 export const FONT_FAMILY_DEFAULT = '"Microsoft yahei", Tahoma, Verdana, Arial, sans-serif';
 

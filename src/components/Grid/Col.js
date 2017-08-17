@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import { GUTTER } from '../styles/constants';
+import { GUTTER } from '../../styles/constants';
 
 function getStyles(props) {
 	return {

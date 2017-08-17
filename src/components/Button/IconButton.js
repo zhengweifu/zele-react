@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 
-import { lighten } from '../utils/colorManipulator';
+import { lighten } from '../../utils/colorManipulator';
 
-import IsMobile from '../utils/IsMobile';
+import IsMobile from '../../utils/IsMobile';
 
 const isMobile = IsMobile.Any();
 

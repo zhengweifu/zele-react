@@ -1,20 +1,41 @@
 import React, { Component, PropTypes } from 'react';
 
-import { fade, lighten, darken } from '../utils/colorManipulator';
+import { fade, lighten, darken } from '../../utils/colorManipulator';
 
-import { GREY100, GREY400 } from '../styles/colors';
+import { GREY300, GREY100, GREY900, BLUE600, RED600 } from '../../styles/colors';
 
-import { FONT_SIZE_DEFAULT, FONT_FAMILY_DEFAULT } from '../styles/constants';
+import { FONT_SIZE_DEFAULT, FONT_FAMILY_DEFAULT } from '../../styles/constants';
 
-import Paper from './Paper';
+import Paper from '../Paper';
 
-import Overlay from './Overlay';
+import Overlay from '../Overlay';
 
-import IsMobile from '../utils/IsMobile';
+import IsMobile from '../../utils/IsMobile';
 
 const isMobile = IsMobile.Any();
 
 function getStyles(props, state) {
+	let { fontSize, size, labelColor } = props;
+	if(props.type === 'default') {
+		labelColor = GREY900;
+	} else {
+		labelColor = GREY100;
+	}
+	let padding = 8;
+	switch(size) {
+		case 'large':
+			fontSize = Math.round(fontSize * (1 + 0.1));
+			padding =  Math.round(padding * (1 + 0.1));
+			break;
+		case 'small':
+			fontSize = Math.round(fontSize * (1 - 0.1));
+			padding =  Math.round(padding * (1 - 0.1));
+			break;
+		case 'mini':
+			fontSize = Math.round(fontSize * (1 - 0.3));
+			padding =  Math.round(padding * (1 - 0.3));
+			break;
+	}
 	return {
 		root: {
 			display: props.fullWidth ? 'block' : 'inline-block',
@@ -28,11 +49,11 @@ function getStyles(props, state) {
 			display: 'inline-block'
 		},
 		label: {
-			color: props.labelColor,
+			color: labelColor,
 			display: 'inline-block',
-			padding: '5px 0px',
+			padding: `${padding}px 0px`,
 			fontFamily: props.fontFamily,
-			fontSize: props.fontSize
+			fontSize: fontSize
 		},
 		icon: {
 			display: 'inline-block',
@@ -76,6 +97,8 @@ export default class RaisedButton extends Component {
 			random: null,
 			isDown: false
 		};
+
+		this.type = 'RaisedButton';
 	}
 
 	generateLoadingAnimation() {
@@ -96,6 +119,7 @@ export default class RaisedButton extends Component {
 	}
 
 	static propTypes = {
+		type: PropTypes.oneOf(['default', 'primary', 'danger']),
 		style: PropTypes.object,
 		styleButton: PropTypes.object,
 		bgColor: PropTypes.string,
@@ -103,6 +127,7 @@ export default class RaisedButton extends Component {
 		fullWidth: PropTypes.bool,
 		label: PropTypes.string,
 		labelColor: PropTypes.string,
+		size: PropTypes.oneOf(['custom', 'large', 'small', 'mini']),
 		fontSize: PropTypes.number,
 		fontFamily: PropTypes.string,
 		leftIcon: PropTypes.node,
@@ -122,12 +147,14 @@ export default class RaisedButton extends Component {
 	};
 
 	static defaultProps = {
+		type: 'default',
+		size: 'custom',
 		style: {},
 		styleButton: {},
-		bgColor: GREY400,
+		bgColor: GREY100,
 		fullWidth: false,
-		label: 'RaisedButton',
-		labelColor: GREY100,
+		label: 'Default',
+		labelColor: GREY300,
 		toggle: false,
 		toggled: false,
 		fontSize: FONT_SIZE_DEFAULT,
@@ -163,9 +190,8 @@ export default class RaisedButton extends Component {
 
 	render() {
 		const {
+			type,
 			label,
-			labelColor,
-			bgColor,
 			hoverColor,
 			leftIcon,
 			rightIcon,
@@ -174,14 +200,32 @@ export default class RaisedButton extends Component {
 			toggle,
 			toggled,
 			toggledColor,
-			onClick
+			onClick,
+			disable
 		} = this.props;
+
+		let { bgColor, labelColor } = this.props;
+
+		if(type === 'default') {
+			labelColor = GREY900;
+		} else {
+			labelColor = GREY100;
+		}
 
 		if(this.state.random === null && this.props.isLoading) {
 			this.setState({random: this.generateLoadingAnimation()});
 		}
 
 		const styles = getStyles(this.props, this.state);
+
+		switch(type) {
+			case 'primary':
+				bgColor = BLUE600;
+				break;
+			case 'danger':
+				bgColor = RED600;
+				break;
+		}
 
         let nbgColor = toggle && this.state.toggled ? toggledColor ? toggledColor : lighten(bgColor, 0.2) : bgColor;
 
@@ -211,7 +255,7 @@ export default class RaisedButton extends Component {
 		const loadingElement = this.props.isLoading ? <div style={styles.loadingParent}><div style={styles.loading}></div></div> : '';
 
 		return (
-			<Paper style={Object.assign({}, styles.root, style)} bgColor={nbgColor}>
+			<Paper style={Object.assign({}, styles.root, style)} disable={disable} bgColor={nbgColor}>
 				<div style={Object.assign({}, styles.button, styleButton)} 
 					onMouseLeave={this.handleMouseLeave.bind(this)}
 					onMouseEnter={this.handleMouseEnter.bind(this)}

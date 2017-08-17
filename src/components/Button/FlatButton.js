@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 import RaisedButton from './RaisedButton';
 
-import { GREY400 } from '../styles/colors';
+import { GREY400 } from '../../styles/colors';
 
 export default class FlatButton extends Component {
 	static propTypes = {

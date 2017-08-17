@@ -13,6 +13,7 @@ function getStyles(props) {
 
 export default class Paper extends Component {
 	static propTypes = {
+		disable: PropTypes.bool,
 		children: PropTypes.node,
 		bgColor: PropTypes.string,
 		roundSize: PropTypes.number,
@@ -20,6 +21,7 @@ export default class Paper extends Component {
 	};
 
 	static defaultProps = {
+		disable: false,
 		bgColor: '#fff',
 		roundSize: 2
 	};
@@ -28,7 +30,7 @@ export default class Paper extends Component {
 		const styles = getStyles(this.props);
 
 		return (
-			<div style={Object.assign({}, styles.root, this.props.style)}>
+			<div style={Object.assign({}, styles.root, this.props.style)} disabled>
 				{this.props.children}
 			</div>
 		);
