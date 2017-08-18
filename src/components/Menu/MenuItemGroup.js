@@ -10,9 +10,13 @@ import Popover from '../Popover';
 
 import Left from '../Left';
 
+import VerticalMiddle from '../VerticalMiddle';
+
 import SvgIcon from '../SvgIcon';
 
-import { GREY700, GREY500 } from '../../styles/colors.js';
+import { darken } from '../../utils/colorManipulator';
+
+import cloneElements from './cloneElements';
 
 class MenuItemGroup extends MixinComponent {
 	constructor(props) {
@@ -24,34 +28,32 @@ class MenuItemGroup extends MixinComponent {
 	static propTypes = {
 		label: PropTypes.string,
 		icon: PropTypes.node,
-		children: PropTypes.node,
-		bgColor: PropTypes.string,
-		color: PropTypes.string,
-		onClick: PropTypes.func
+		children: PropTypes.node
 	};
 
 	static defaultProps = {
-		label: 'MenuItemGroup',
-		bgColor: GREY700,
-		color: GREY500
+		label: 'MenuItemGroup'
 	};
 
 	render() {
-		const { label, children, bgColor, color, icon, onClick } = this.props;
-		const root = this.root();
-		const rootMenu = root.component;
+		const { label, children, icon } = this.props;
+		const menuProps = this.getMenuProps();
+		// const rootMenu = menuProps.component;
 
-		const height = rootMenu.props.itemHeight;
-		const activeBgColor = rootMenu.props.itemActiveBgColor;
-		// const textColor = rootMenu.props.itemColor;
-		const activeTextColor = rootMenu.props.itemActiveColor;
-		const fontFamily = rootMenu.props.itemFontFamily;
-		const fontSize = rootMenu.props.itemFontSize;
-		const padding = rootMenu.props.itemPadding;
+		const height = menuProps.itemHeight;
+		const activeBgColor = menuProps.itemActiveBgColor;
+		const textColor = darken(menuProps.itemColor, 0.3);
+		const fontFamily = menuProps.itemFontFamily;
+		const fontSize = menuProps.itemFontSize;
+		const padding = menuProps.itemPadding;
 
-		const rootMode = rootMenu.props.mode;
+		const bgColor = menuProps.subBgColor;
 
-		const index = root.index;
+		const rootMode = menuProps.mode;
+
+		const index = menuProps.index;
+
+		let _children = cloneElements(children);
 
 		const PCPopoverStyle = {
 			backgroundColor: bgColor,
@@ -67,29 +69,28 @@ class MenuItemGroup extends MixinComponent {
 		};
 
 		const iconSize = fontSize + 4;
+		const marginSize = (height - iconSize) / 2;
 		const iconStyle = {
-			margin: (height - iconSize) / 2,
-			marginRight: 5,
-			marginLeft: 0
+			margin: `${marginSize} 5 ${marginSize} 0`
 		};
-		iconStyle.marginLeft = iconStyle.margin + 5;
 
-		const labelElement = <Label content={label} fontFamily={fontFamily} fontSize={fontSize} color={color} height={height}/>;
+		const iconElement = icon !== undefined ? <VerticalMiddle height={height}>{React.cloneElement(icon, {color: textColor, width: iconSize, height: iconSize, style: iconStyle})}</VerticalMiddle> : '';
+
+		const labelElement = <Label content={label} fontFamily={fontFamily} fontSize={fontSize} color={textColor} height={height}/>;
 		const childRootElement = rootMode === 'vertical' || index > 1 ? <div style={{
-			// display: this.state.open ? 'block' : 'none',
 			margin: `0px ${-padding * index}px`,
 			// padding: `0px ${padding}px`,
 			backgroundColor: bgColor
-		}}>{children}</div>:
+		}}>{_children}</div>:
 			<Popover open={true} isUseSlideAnimation={true} maxHeight={250} outClickClose={false} style={PCPopoverStyle} onRequestClose={e => this.setState({activeIndex: -1, open: false})}>
-				<div style={{margin: `0px ${-padding}px`, backgroundColor: bgColor}}>{children}</div>
+				<div style={{margin: `0px ${-padding}px`, backgroundColor: bgColor}}>{_children}</div>
 			</Popover>;
 		return <div style={{
 				// backgroundColor: this.state.hover ? activeBgColor : 'transparent',
 				padding: `0px ${padding * index}px`
 			}}>
 			<Left>
-				{icon !== undefined ? React.cloneElement(icon, {color: color, width: iconSize, height: iconSize, style: iconStyle}) : ''}
+				{iconElement}
 				{labelElement}
 			</Left>
 			{childRootElement}

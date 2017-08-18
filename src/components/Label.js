@@ -43,7 +43,8 @@ class Label extends Component {
 			verticalAlign: 'middle',
 			color: color,
 			fontSize: fontSize,
-			fontFamily: fontFamily
+			fontFamily: fontFamily,
+			whiteSpace: 'nowrap' // 强制不换行
 		};
 
 		return (

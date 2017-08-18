@@ -10,11 +10,13 @@ import Popover from '../Popover';
 
 import Left from '../Left';
 
+import VerticalMiddle from '../VerticalMiddle';
+
 import SvgIcon from '../SvgIcon';
 
-import { GREY700 } from '../../styles/colors.js';
-
 import { gKeyboardArrowRight,  gKeyboardArrowDown } from '../../svgIcons/google/Hardware';
+
+import cloneElements from './cloneElements';
 
 class SubMenu extends MixinComponent {
 	constructor(props) {
@@ -39,25 +41,25 @@ class SubMenu extends MixinComponent {
 	static defaultProps = {
 		label: 'SubMenu',
 		open: false,
-		bgColor: GREY700
 	};
 
 	render() {
-		const { label, children, bgColor, onClick, icon } = this.props;
-		const root = this.root();
-		const rootMenu = root.component;
+		const { label, children, onClick, icon } = this.props;
+		const menuProps = this.getMenuProps();
+		const rootMenu = menuProps.component;
 
-		const height = rootMenu.props.itemHeight;
-		const activeBgColor = rootMenu.props.itemActiveBgColor;
-		const textColor = rootMenu.props.itemColor;
-		const activeTextColor = rootMenu.props.itemActiveColor;
-		const fontFamily = rootMenu.props.itemFontFamily;
-		const fontSize = rootMenu.props.itemFontSize;
-		const padding = rootMenu.props.itemPadding;
+		const height = menuProps.itemHeight;
+		const activeBgColor = menuProps.itemActiveBgColor;
+		const textColor = menuProps.itemColor;
+		const fontFamily = menuProps.itemFontFamily;
+		const fontSize = menuProps.itemFontSize;
+		const padding = menuProps.itemPadding;
 
-		const rootMode = rootMenu.props.mode;
+		const bgColor = menuProps.subBgColor;
 
-		const index = root.index;
+		const rootMode = menuProps.mode;
+
+		const index = menuProps.index;
 
 		const PCPopoverStyle = {
 			backgroundColor: bgColor,
@@ -74,11 +76,8 @@ class SubMenu extends MixinComponent {
 
 		const iconSize = fontSize + 4, arrowSize = 20;
 		const arrowStyle = {
-			margin: (height - iconSize) / 2 + 1,
-			marginRight: 0
+			margin: '0 0 0 10',
 		};
-
-		arrowStyle.marginLeft = arrowStyle.margin + 5;
 
 		const iconStyle = {
 			margin: (height - iconSize) / 2,
@@ -86,28 +85,37 @@ class SubMenu extends MixinComponent {
 			marginLeft: 0
 		};
 
-		const labelElement = <Label content={label} fontFamily={fontFamily} fontSize={fontSize} color={this.state.hover ? activeTextColor : textColor} height={height}/>;
-		const iconElement = <SvgIcon color={textColor} width={arrowSize} height={arrowSize} style={arrowStyle}>
+
+		let _children = cloneElements(children);
+
+		const iconElement = icon !== undefined ? <VerticalMiddle height={height}>{React.cloneElement(icon, {color: textColor, width: iconSize, height: iconSize, style: iconStyle})}</VerticalMiddle> : '';
+
+		const labelElement = <Label content={label} fontFamily={fontFamily} fontSize={fontSize} color={textColor} height={height}/>;
+		const arrowElement = <VerticalMiddle height={height}><SvgIcon color={textColor} width={arrowSize} height={arrowSize} style={arrowStyle}>
 				<path d={this.state.open ? gKeyboardArrowDown : gKeyboardArrowRight}/>
-			</SvgIcon>;
+			</SvgIcon></VerticalMiddle>;
 		const childRootElement = rootMode === 'vertical' || index > 1 ? <div style={{
 			display: this.state.open ? 'block' : 'none',
 			margin: `0px ${-padding * index}px`,
 			// padding: `0px ${padding}px`,
 			backgroundColor: bgColor
-		}}>{children}</div>:
+		}}>{_children}</div>:
 			<Popover open={this.state.open} isUseSlideAnimation={true} maxHeight={250} outClickClose={false} style={PCPopoverStyle} onRequestClose={e => this.setState({activeIndex: -1, open: false})}>
-				<div style={{margin: `0px ${-padding}px`, backgroundColor: bgColor}}>{children}</div>
+				<div style={{margin: `0px ${-padding}px`, backgroundColor: bgColor}}>{_children}</div>
 			</Popover>;
 		return <div style={{
-				// backgroundColor: this.state.hover ? activeBgColor : 'transparent',
+				// boxSizing: 'border-box',
 				padding: `0px ${padding * index}px`
 			}} onMouseOver={e => {
+				this.setState({hover: true});
 				if(rootMode !== 'vertical') {
-					// this.setState({open: true, hover: true})
+					this.setState({open: true})
 				};
 			}} onMouseOut={e => {
-				// if(rootMode !== 'vertical') this.setState({open: false, hover: false});
+				this.setState({hover: false});
+				if(rootMode !== 'vertical') {
+					this.setState({open: false});
+				}
 			}}>
 			<div onClick={e => {
 				this.setState({open: !this.state.open});
@@ -115,9 +123,9 @@ class SubMenu extends MixinComponent {
 					onClick();
 				}
 			}}><Left>
-				{icon !== undefined ? React.cloneElement(icon, {color: textColor, width: iconSize, height: iconSize, style: iconStyle}) : ''}
-				{labelElement}
 				{iconElement}
+				{labelElement}
+				{arrowElement}
 			</Left></div>
 			{childRootElement}
 		</div>;

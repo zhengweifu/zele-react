@@ -7,11 +7,15 @@ require('../csses/clearfix.css');
 function getStyles(props) {
 	return {
 		root: {
+			// overflow: 'hidden',
+			whiteSpace: 'nowrap'
 		},
 
 		item: {
-			float: 'left',
+			// float: 'left',
+			display: 'inline-block',
 			boxSizing: 'border-box',
+			whiteSpace: 'normal'
 		},
 	};
 }
@@ -44,7 +48,7 @@ class Left extends Component {
 		});
 
 		return (
-			<div style={Object.assign({}, styles.root, this.props.style)} className='clearfix'>{wrappedChildren}</div>
+			<div style={Object.assign({}, styles.root, this.props.style)}>{wrappedChildren}</div>
 		);
 	}
 }
