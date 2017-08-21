@@ -2,7 +2,7 @@
   "name": "zele-react",
   "version": "0.0.",
   "description": "Zoom elements for react",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
