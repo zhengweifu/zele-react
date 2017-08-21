@@ -5,22 +5,19 @@ import Menu from '../../../../src/components/Menu/Menu';
 import SubMenu from '../../../../src/components/Menu/SubMenu';
 import MenuItem from '../../../../src/components/Menu/MenuItem';
 import MenuItemGroup from '../../../../src/components/Menu/MenuItemGroup';
-import SvgIcon from '../../../../src/components/SvgIcon';
-import { gImage, gTransform, gBrush } from '../../../../src/svgIcons/google/Image';
+
+import Icon from '../../../../src/components/Icon';
 
 const MenuExampleHDark = [
     "import React from 'react';",
-    "import Menu from 'zele-react/Menu';",
-    "import MenuItem from 'zele-react/MenuItem';",
-    "import SubMenu from 'zele-react/SubMenu';",
-    "import MenuItemGroup from 'zele-react/MenuItemGroup';",
+    "import { Menu, SubMenu, MenuItem, MenuItemGroup, Icon } from 'zele-react';",
     "",
     "const MenuExampleHDark = () => {",
     "    <Menu theme='dark'>",
-    "        <MenuItem icon={<SvgIcon><path d={gImage} /></SvgIcon>}/>",
-    "        <SubMenu icon={<SvgIcon><path d={gBrush} /></SvgIcon>}>",
+    "        <MenuItem icon={<Icon type='gImage' />}/>",
+    "        <SubMenu icon={<Icon type='gBrush' />}>",
     "           <MenuItem />",
-    "           <MenuItemGroup icon={<SvgIcon><path d={gTransform} /></SvgIcon>}>",
+    "           <MenuItemGroup icon={<Icon type='gTransform' />}>",
     "               <MenuItem /> ",
     "            </MenuItemGroup>",
     "           <MenuItem />  ",
@@ -38,17 +35,14 @@ const MenuExampleHDark = [
 
 const MenuExampleHLight = [
     "import React from 'react';",
-    "import Menu from 'zele-react/Menu';",
-    "import MenuItem from 'zele-react/MenuItem';",
-    "import SubMenu from 'zele-react/SubMenu';",
-    "import MenuItemGroup from 'zele-react/MenuItemGroup';",
+    "import { Menu, SubMenu, MenuItem, MenuItemGroup, Icon } from 'zele-react';",
     "",
     "const MenuExampleHLight = () => {",
     "   <Menu theme='light'>",
-    "       <MenuItem icon={<SvgIcon><path d={gImage} /></SvgIcon>}/>",
-    "       <SubMenu icon={<SvgIcon><path d={gBrush} /></SvgIcon>}>",
+    "       <MenuItem icon={<Icon type='gImage' />}/>",
+    "       <SubMenu icon={<Icon type='gBrush' />}>",
     "          <MenuItem />",
-    "          <MenuItemGroup icon={<SvgIcon><path d={gTransform} /></SvgIcon>}>",
+    "          <MenuItemGroup icon={<Icon type='gTransform' />}>",
     "              <MenuItem /> ",
     "           </MenuItemGroup>",
     "          <MenuItem />  ",
@@ -67,10 +61,7 @@ const MenuExampleHLight = [
 
 const MenuExampleVDark = [
     "import React from 'react';",
-    "import Menu from 'zele-react/Menu';",
-    "import MenuItem from 'zele-react/MenuItem';",
-    "import SubMenu from 'zele-react/SubMenu';",
-    "import MenuItemGroup from 'zele-react/MenuItemGroup';",
+    "import { Menu, SubMenu, MenuItem, MenuItemGroup, Icon } from 'zele-react';",
     "",
     "const MenuExampleVDark = () => {",
     "    <Menu mode='vertical'>",
@@ -79,14 +70,14 @@ const MenuExampleVDark = [
     "           <MenuItem />",
     "           <MenuItem />  ",
     "        </SubMenu>",
-    "        <MenuItem icon={<SvgIcon><path d={gImage} /></SvgIcon>}/>",
+    "        <MenuItem icon={<Icon type='gImage' />}/>",
     "        <SubMenu open={true}>",
     "            <MenuItem />",
     "            <SubMenu open={true}>",
     "               <MenuItem />",
     "               <MenuItem />  ",
     "            </SubMenu>",
-    "            <MenuItemGroup icon={<SvgIcon><path d={gTransform} /></SvgIcon>}>",
+    "            <MenuItemGroup icon={<Icon type='gTransform' />}>",
     "                <MenuItem />",
     "                <MenuItem />  ",
     "            </MenuItemGroup>",
@@ -100,10 +91,7 @@ const MenuExampleVDark = [
 
 const MenuExampleVLight = [
     "import React from 'react';",
-    "import Menu from 'zele-react/Menu';",
-    "import MenuItem from 'zele-react/MenuItem';",
-    "import SubMenu from 'zele-react/SubMenu';",
-    "import MenuItemGroup from 'zele-react/MenuItemGroup';",
+    "import { Menu, SubMenu, MenuItem, MenuItemGroup, Icon } from 'zele-react';",
     "",
     "const MenuExampleVLight = () => {",
     "    <Menu mode='vertical' theme='light'>",
@@ -112,14 +100,14 @@ const MenuExampleVLight = [
     "           <MenuItem />",
     "           <MenuItem />  ",
     "        </SubMenu>",
-    "        <MenuItem icon={<SvgIcon><path d={gImage} /></SvgIcon>}/>",
+    "        <MenuItem icon={<Icon type='gImage' />}/>",
     "        <SubMenu open={true}>",
     "            <MenuItem />",
     "            <SubMenu open={true}>",
     "               <MenuItem />",
     "               <MenuItem />  ",
     "            </SubMenu>",
-    "            <MenuItemGroup icon={<SvgIcon><path d={gTransform} /></SvgIcon>}>",
+    "            <MenuItemGroup icon={<Icon type='gTransform' />}>",
     "                <MenuItem />",
     "                <MenuItem />  ",
     "            </MenuItemGroup>",
@@ -136,10 +124,10 @@ const MenuPage = () => {
         <h2>代码演示</h2>
         <div>
             <Menu theme='dark'>
-                <MenuItem icon={<SvgIcon><path d={gImage} /></SvgIcon>}/>
-                <SubMenu icon={<SvgIcon><path d={gBrush} /></SvgIcon>}>
+                <MenuItem icon={<Icon type='gLockOutline' />}/>
+                <SubMenu icon={<Icon type='gBrush' />}>
                    <MenuItem />
-                   <MenuItemGroup icon={<SvgIcon><path d={gTransform} /></SvgIcon>}>
+                   <MenuItemGroup icon={<Icon type='gTransform' />}>
                        <MenuItem /> 
                     </MenuItemGroup>
                    <MenuItem />  
@@ -154,10 +142,10 @@ const MenuPage = () => {
         </div>
         <div>
             <Menu theme='light'>
-                <MenuItem icon={<SvgIcon><path d={gImage} /></SvgIcon>}/>
-                <SubMenu icon={<SvgIcon><path d={gBrush} /></SvgIcon>}>
+                <MenuItem icon={<Icon type='gImage' />}/>
+                <SubMenu icon={<Icon type='gBrush' />}>
                    <MenuItem />
-                   <MenuItemGroup icon={<SvgIcon><path d={gTransform} /></SvgIcon>}>
+                   <MenuItemGroup icon={<Icon type='gTransform' />}>
                        <MenuItem /> 
                     </MenuItemGroup>
                    <MenuItem />  
@@ -178,14 +166,14 @@ const MenuPage = () => {
                        <MenuItem />
                        <MenuItem />  
                     </SubMenu>
-                    <MenuItem icon={<SvgIcon><path d={gImage} /></SvgIcon>}/>
+                    <MenuItem icon={<Icon type='gImage' />}/>
                     <SubMenu open={true}>
                         <MenuItem />
                         <SubMenu open={true}>
                            <MenuItem />
                            <MenuItem />  
                         </SubMenu>
-                        <MenuItemGroup icon={<SvgIcon><path d={gTransform} /></SvgIcon>}>
+                        <MenuItemGroup icon={<Icon type='gTransform' />}>
                             <MenuItem />
                             <MenuItem />  
                         </MenuItemGroup>
@@ -201,14 +189,14 @@ const MenuPage = () => {
                        <MenuItem />
                        <MenuItem />  
                     </SubMenu>
-                    <MenuItem icon={<SvgIcon><path d={gImage} /></SvgIcon>}/>
+                    <MenuItem icon={<Icon type='gImage' />}/>
                     <SubMenu open={true}>
                         <MenuItem />
                         <SubMenu open={true}>
                            <MenuItem />
                            <MenuItem />  
                         </SubMenu>
-                        <MenuItemGroup icon={<SvgIcon><path d={gTransform} /></SvgIcon>}>
+                        <MenuItemGroup icon={<Icon type='gTransform' />}>
                             <MenuItem />
                             <MenuItem />  
                         </MenuItemGroup>

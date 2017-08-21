@@ -35,5 +35,6 @@ export { default as SimpleItem } from './components/SimpleItem';
 export { default as Slider } from './components/Slider';
 export { default as SpecialGridList } from './components/SpecialGridList';
 export { default as SvgIcon } from './components/SvgIcon';
+export { default as Icon } from './components/Icon';
 export { default as VerticalMiddle } from './components/VerticalMiddle';
 export { default as VerticalSeparation } from './components/VerticalSeparation';

@@ -1,11 +1,10 @@
 {
   "name": "zele-react",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Zoom elements for react",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublish": "./build/prepublish.sh"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
