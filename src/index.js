@@ -25,12 +25,11 @@ export { default as MenuItem } from './components/Menu/MenuItem';
 export { default as MenuItemGroup } from './components/Menu/MenuItemGroup';
 
 export { default as Modal } from './components/Modal';
-export { default as NavBar } from './components/NavBar';
 export { default as Overlay } from './components/Overlay';
 export { default as Paper } from './components/Paper';
 export { default as Popover } from './components/Popover';
-export { default as PopuPanel } from './components/PopuPanel';
-export { default as Rular } from './components/Rular';
+export { default as PopupPanel } from './components/PopupPanel';
+export { default as Ruler } from './components/Ruler';
 export { default as Select } from './components/Select';
 export { default as SimpleItem } from './components/SimpleItem';
 export { default as Slider } from './components/Slider';

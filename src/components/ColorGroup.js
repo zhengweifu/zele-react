@@ -2,7 +2,7 @@ import React from 'react';
 
 import ColorItem from './ColorItem';
 
-import GridList from './GridList';
+import GridList from './Grid/GridList';
 
 export default class ColorGroup extends React.Component {
   constructor(props) {

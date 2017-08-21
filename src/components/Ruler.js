@@ -23,8 +23,8 @@ class Ruler extends Component {
 		style: {},
 		top: 10,
 		left: 10,
-		width: 100.
-		: 
+		width: 100,
+		height: 100
 	};
 
 	render() {

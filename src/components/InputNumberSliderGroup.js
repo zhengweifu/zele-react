@@ -6,7 +6,7 @@ import VerticalSeparation from './VerticalSeparation';
 
 import SvgIcon from './SvgIcon';
 
-import IconButton from './IconButton';
+import IconButton from './Button/IconButton';
 
 import SetToRange from '../utils/SetToRange';
 
@@ -14,15 +14,15 @@ import { CYAN500, GREY500 } from '../styles/colors';
 
 import { FONT_SIZE_DEFAULT, FONT_FAMILY_DEFAULT } from '../styles/constants';
 
-import { lock, lockOpen } from '../svgIcons/google/Action';
+import { gLock, gLockOpen } from '../svgIcons/google/Action';
 
 const lockColor = CYAN500;
 
 const unLockColor = GREY500;
 
-const lockIconPath = <path d={lock}/>;
+const lockIconPath = <path d={gLock}/>;
 
-const unLockIconPath = <path d={lockOpen}/>;
+const unLockIconPath = <path d={gLockOpen}/>;
 
 function getStyles(props, state) {
 	const { 

@@ -10,7 +10,7 @@ import { CYAN500, GREY300, PINK300 } from '../styles/colors';
 
 import { FONT_SIZE_DEFAULT, FONT_FAMILY_DEFAULT } from '../styles/constants';
 
-import IconButton from './IconButton';
+import IconButton from './Button/IconButton';
 
 import SvgIcon from './SvgIcon';
 
@@ -18,7 +18,7 @@ import { gClear } from '../svgIcons/google/Content';
 
 require('../csses/clearfix.css');
 
-import RaisedButton from './RaisedButton';
+import RaisedButton from './Button/RaisedButton';
 
 function getStyles(props, state) {
 	const padding = 20;

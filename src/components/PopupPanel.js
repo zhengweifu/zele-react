@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 // import { HardwareKeyboardArrowDown, HardwareKeyboardArrowRight} from 'material-ui/svg-icons';
 import SvgIcon from './SvgIcon';
 
-import { keyboardArrowDown, keyboardArrowRight } from '../svgIcons/google/Hardware';
+import { gKeyboardArrowDown, gKeyboardArrowRight } from '../svgIcons/google/Hardware';
 
 import { GREY300, GREY200 } from '../styles/colors';
 
@@ -118,7 +118,7 @@ export default class PopupPanel extends Component {
           // e.preventDefault();
           // e.stopPropagation();
         }}>{this.props.label}
-          {this.state.open ? <SvgIcon style={arrowStyle} color='#000'><path d={keyboardArrowDown}/></SvgIcon> : <SvgIcon style={arrowStyle} color='#000'><path d={keyboardArrowRight}/></SvgIcon>}
+          {this.state.open ? <SvgIcon style={arrowStyle} color='#000'><path d={gKeyboardArrowDown}/></SvgIcon> : <SvgIcon style={arrowStyle} color='#000'><path d={gKeyboardArrowRight}/></SvgIcon>}
         </div>
         <div style={Object.assign(bodyStyle, this.props.bodyStyle)}>
           {this.props.children}

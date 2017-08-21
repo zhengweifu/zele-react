@@ -2,7 +2,7 @@ import React from 'react';
 
 import SvgIcon from './SvgIcon';
 
-import { check } from '../svgIcons/google/Navigation';
+import { gCheck } from '../svgIcons/google/Navigation';
 
 import { CYAN500, GREY300, ORANGE700 } from '../styles/colors';
 
@@ -33,7 +33,7 @@ export default class ColorItem extends React.Component {
   renderActive() {
     if(this.state.active) {
       return (
-        <SvgIcon color={this.props.activeColor}><path d={check} /></SvgIcon>
+        <SvgIcon color={this.props.activeColor}><path d={gCheck} /></SvgIcon>
       );
     }
   }
