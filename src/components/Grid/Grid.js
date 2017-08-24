@@ -24,6 +24,16 @@ export default class Grid extends Component {
 		gutter: GUTTER
 	};
 
+	static childContextTypes = {
+		component: PropTypes.any
+	}
+
+	getChildContext() {
+		return {
+			component: this
+		};
+	}
+
 	render() {
 		const { children, style } = this.props;
 		const styles = getStyles(this.props);
