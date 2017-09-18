@@ -6,6 +6,12 @@ import { GREY300, GREY100, GREY900, BLUE600, RED600 } from '../../styles/colors'
 
 import { FONT_SIZE_DEFAULT, FONT_FAMILY_DEFAULT } from '../../styles/constants';
 
+import Left from '../Left';
+
+import VerticalMiddle from '../VerticalMiddle';
+
+import Label from '../Label';
+
 import Paper from '../Paper';
 
 import Overlay from '../Overlay';
@@ -15,7 +21,10 @@ import IsMobile from '../../utils/IsMobile';
 const isMobile = IsMobile.Any();
 
 function getStyles(props, state) {
-	let { fontSize, size, labelColor } = props;
+	let { fontSize, size, labelColor, height } = props;
+
+	let iconSize = 20;
+
 	if(props.type === 'default') {
 		labelColor = GREY900;
 	} else {
@@ -26,27 +35,43 @@ function getStyles(props, state) {
 		case 'large':
 			fontSize = Math.round(fontSize * (1 + 0.1));
 			padding =  Math.round(padding * (1 + 0.1));
+			height = 36;
+			iconSize = 24;
 			break;
 		case 'small':
 			fontSize = Math.round(fontSize * (1 - 0.1));
 			padding =  Math.round(padding * (1 - 0.1));
+			height = 28;
+			iconSize = 18;
 			break;
 		case 'mini':
 			fontSize = Math.round(fontSize * (1 - 0.3));
 			padding =  Math.round(padding * (1 - 0.3));
+			height = 24;
+			iconSize = 16;
 			break;
 	}
 	return {
 		root: {
-			display: props.fullWidth ? 'block' : 'inline-block',
-			position: 'relative'
+			// display: props.fullWidth ? 'block' : 'inline-block',
+			position: 'relative',
+			border: 'none',
+			width: props.fullWidth ? '100%' : 'auto',
+			padding: 0,
+			borderRadius: props.borderRadius,
+			boxShadow: props.shadow ? 'rgba(0, 0, 0, 0.1) 0px 2px 3px' : 'none',
+			cursor: !props.disabled ? 'pointer' : 'not-allowed',
+			height: height,
+			outline: 'none'
 		},
 		button: {
 			padding: '0px 10px',
-			textAlign: 'center'
+			textAlign: 'center',
+			height: '100%'
 		},
 		item: {
-			display: 'inline-block'
+			display: 'inline-block',
+			height: '100%'
 		},
 		label: {
 			color: labelColor,
@@ -83,7 +108,11 @@ function getStyles(props, state) {
 		    right: 0,
 		    margin: 'auto',
 		    animation: `animation_${state.random} 2s linear infinite`
-		}
+		},
+
+		height: height,
+
+		iconSize: iconSize
 	};
 }
 
@@ -127,6 +156,7 @@ export default class RaisedButton extends Component {
 		fullWidth: PropTypes.bool,
 		label: PropTypes.string,
 		labelColor: PropTypes.string,
+		height: PropTypes.number,
 		size: PropTypes.oneOf(['custom', 'large', 'small', 'mini']),
 		fontSize: PropTypes.number,
 		fontFamily: PropTypes.string,
@@ -142,13 +172,16 @@ export default class RaisedButton extends Component {
 		onTouchEnd: PropTypes.func,
 		onTouchStart: PropTypes.func,
 		onClick: PropTypes.func,
-		disable: PropTypes.bool,
+		disabled: PropTypes.bool,
+		borderRadius: PropTypes.number,
+		shadow: PropTypes.bool,
 		isLoading: PropTypes.bool
 	};
 
 	static defaultProps = {
 		type: 'default',
 		size: 'custom',
+		height: 32,
 		style: {},
 		styleButton: {},
 		bgColor: GREY100,
@@ -159,12 +192,14 @@ export default class RaisedButton extends Component {
 		toggled: false,
 		fontSize: FONT_SIZE_DEFAULT,
 		fontFamily: FONT_FAMILY_DEFAULT,
-		disable: false,
+		borderRadius: 2,
+		shadow: true,
+		disabled: false,
 		isLoading: false
 	};
 
 	handleMouseEnter(e) {
-		if(!isMobile) {
+		if(!this.props.disabled && !isMobile) {
 			this.setState({hovered: true});
 			if(this.props.onMouseEnter) {
 				this.props.onMouseEnter(e);
@@ -173,7 +208,7 @@ export default class RaisedButton extends Component {
 	}
 
 	handleMouseLeave(e) {
-		if(!isMobile) {
+		if(!this.props.disabled && !isMobile) {
 			this.setState({hovered: false});
 			if(this.props.onMouseLeave) {
 				this.props.onMouseLeave(e);
@@ -201,7 +236,7 @@ export default class RaisedButton extends Component {
 			toggled,
 			toggledColor,
 			onClick,
-			disable
+			disabled
 		} = this.props;
 
 		let { bgColor, labelColor } = this.props;
@@ -241,42 +276,50 @@ export default class RaisedButton extends Component {
 
 		let iconRightStyle = Object.assign({}, styles.icon);
 
-		if(leftIcon && label) {
-			iconLeftStyle['paddingRight'] = 5;
+		let nlabelColor = labelColor;
+
+		if(disabled) {
+			nbgColor = 'rgb(229, 229, 229)';
+			nlabelColor = 'rgba(0, 0, 0, 0.3)';
+			labelStyle.color = nlabelColor;
 		}
 
-		if(rightIcon && label) {
-			iconRightStyle['paddingLeft'] = 5;
-		}
-
-		const leftElement = leftIcon ? <div style={iconLeftStyle}>{React.cloneElement(leftIcon, {color: labelColor})}</div> : null;
-		const centerElement = <span style={labelStyle}>{label}</span>;
-		const rightElement = rightIcon ? <div style={iconRightStyle}>{React.cloneElement(rightIcon, {color: labelColor})}</div> : null;
+		const leftElement = leftIcon ? <VerticalMiddle style={{
+			paddingRight: label ? 5 : 0
+		}} height={styles.height}>{React.cloneElement(leftIcon, {color: nlabelColor, width: styles.iconSize, height: styles.iconSize})}</VerticalMiddle> : null;
+		const centerElement = <Label color={nlabelColor} content={label} height={styles.height}/>;
+		const rightElement = rightIcon ? <VerticalMiddle style={{
+			paddingLeft: label ? 5 : 0
+		}} height={styles.height}>{React.cloneElement(rightIcon, {color: nlabelColor, width: styles.iconSize, height: styles.iconSize})}</VerticalMiddle> : null;
 		const loadingElement = this.props.isLoading ? <div style={styles.loadingParent}><div style={styles.loading}></div></div> : '';
 
 		return (
-			<Paper style={Object.assign({}, styles.root, style)} disable={disable} bgColor={nbgColor}>
+			<div disabled={disabled} style={Object.assign({backgroundColor: nbgColor}, styles.root, style)}>
 				<div style={Object.assign({}, styles.button, styleButton)} 
 					onMouseLeave={this.handleMouseLeave.bind(this)}
 					onMouseEnter={this.handleMouseEnter.bind(this)}
-					onMouseDown={e => this.setState({isDown: true})}
-					onMouseUp={e => this.setState({isDown: false})}
-					onClick={e => {
-						if(toggle) {
-                            this.setState({toggled: !this.state.toggled});
-                        }
-						if(onClick) {
-							onClick(e);
+					onMouseDown={e => {
+						if(!disabled) this.setState({isDown: true});
+					}} onMouseUp={e => {
+						if(!disabled) this.setState({isDown: false});
+					}} onClick={e => { 
+						if(disabled) {
+							if(toggle) {
+	                            this.setState({toggled: !this.state.toggled});
+	                        }
+							if(onClick) {
+								onClick(e);
+							}
 						}
 					}}>
-					<div style={styles.item}>
+					<Left style={{height: '100%'}}>
 						{leftElement}
 						{centerElement}
 						{rightElement}
-					</div>
+					</Left>
 				</div>
 				{loadingElement}
-			</Paper>
+			</div>
 		);
 	}
 }
