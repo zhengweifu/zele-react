@@ -40,7 +40,6 @@ export default class Grid extends Component {
 		return (
 			<div className='clearfix' style={Object.assign({}, styles.root, style)}>
 				{children}
-				<div style={{clear: 'both'}}></div>
 			</div>
 		);
 	}

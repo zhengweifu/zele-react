@@ -12,8 +12,8 @@ function getStyles(props) {
 		},
 
 		item: {
-			// float: 'left',
-			display: 'inline-block',
+			float: 'left',
+			// display: 'inline-block',
 			boxSizing: 'border-box',
 			whiteSpace: 'normal'
 		},
@@ -43,12 +43,12 @@ class Left extends Component {
 		const wrappedChildren = children.map((child, index) => {
 			const itemStyle = Object.assign({}, styles.item);
 			return (
-				<div key={'grid_' + index} style={Object.assign({}, itemStyle)}>{child}</div>
+				<div key={'left_' + index} style={Object.assign({}, itemStyle)}>{child}</div>
 			);
 		});
 
 		return (
-			<div style={Object.assign({}, styles.root, this.props.style)}>{wrappedChildren}</div>
+			<div style={Object.assign({}, styles.root, this.props.style)} className='clearfix'>{wrappedChildren}</div>
 		);
 	}
 }

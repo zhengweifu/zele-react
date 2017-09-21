@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import InputNumberSlider from './InputNumberSlider'; 
+import InputSlider from './InputSlider'; 
 
 import VerticalSeparation from './VerticalSeparation';
 
@@ -58,7 +58,10 @@ function getStyles(props, state) {
 			width: titleWidth,
 			color: titleColor,
 			fontSize: titleFontSize,
-			fontFamily: titleFontFamily
+			fontFamily: titleFontFamily,
+			overflow: 'hidden',
+			textOverflow: 'ellipsis',
+			whiteSpace: 'nowrap'
 		},
 		slider: {
 			position: 'absolute',
@@ -92,7 +95,7 @@ function getStyles(props, state) {
 	};
 } 
 	
-export default class InputNumberSliderGroup extends Component {
+export default class InputSliderGroup extends Component {
 
 	constructor(props) {
 		super(props);
@@ -109,7 +112,7 @@ export default class InputNumberSliderGroup extends Component {
 	static propTypes = {
 		gutterY:  PropTypes.number,
 		cellHeight: PropTypes.number,
-		type: PropTypes.oneOf(['INT', 'NUMBER']),
+		type: PropTypes.oneOf(['INT', 'FLOAT']),
 		iconSize: PropTypes.number,
 		defaults: PropTypes.arrayOf(PropTypes.number).isRequired,
 		title: PropTypes.string,
@@ -120,7 +123,8 @@ export default class InputNumberSliderGroup extends Component {
 		labelColor: PropTypes.string,
 		onChange: PropTypes.func,
 		max: PropTypes.number.isRequired,
-		min: PropTypes.number.isRequired
+		min: PropTypes.number.isRequired,
+		inputStype: PropTypes.oneOf(['LINE', 'QUDR'])
 	};
 
 	static defaultProps = {
@@ -132,16 +136,17 @@ export default class InputNumberSliderGroup extends Component {
 		titleColor: GREY500,
 		titleFontSize: FONT_SIZE_DEFAULT,
 		titleFontFamily: FONT_FAMILY_DEFAULT,
-		type: 'NUMBER'
+		type: 'FLOAT',
+		inputStype: 'LINE'
 	};
 
 	renderItems() {
 		const { lock, values } = this.state;
-		const { cellHeight, max, min, type, labels, labelWidth, labelColor, onChange } = this.props;
+		const { cellHeight, max, min, type, labels, labelWidth, labelColor, onChange, inputStype } = this.props;
 		return values.map((value, index) => {
 			const label = labels && labels.length > index ? labels[index] : undefined;
 			return (
-				<InputNumberSlider
+				<InputSlider
 					onChange={(e, v) => {
 						let newValues;
 						if(lock) {
@@ -151,7 +156,7 @@ export default class InputNumberSliderGroup extends Component {
 							for(let i = 0; i < newValues.length; i++) {
 								newValues[i] += scale * (max - min);
 
-								// newValues[i] = SetToRange(newValues[i], min, max);
+								newValues[i] = SetToRange(newValues[i], min, max);
 							}
 
 							this.setState({values: newValues});
@@ -166,6 +171,7 @@ export default class InputNumberSliderGroup extends Component {
 						}
 						
 					}}
+					inputStype={inputStype}
 					label={label}
 					type={type}
 					labelWidth={labelWidth}

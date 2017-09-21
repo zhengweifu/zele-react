@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import InputNumber from './InputNumber';
+import Input from './Input';
 import Slider from './Slider';
 
 import { GREY500 } from '../styles/colors';
@@ -32,7 +32,10 @@ function getStyles(props) {
 			width: labelWidth,
 			color: labelColor,
 			fontSize: labelFontSize,
-			fontFamily: labelFontFamily
+			fontFamily: labelFontFamily,
+			overflow: 'hidden',
+			textOverflow: 'ellipsis',
+			whiteSpace: 'nowrap'
 		},
 		input: {
 			overflow: 'hidden',
@@ -51,7 +54,7 @@ function getStyles(props) {
 	};
 }
 
-export default class InputNumberSlider extends Component {
+export default class InputSlider extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -63,7 +66,7 @@ export default class InputNumberSlider extends Component {
 		height: 30,
 		dotRadius: 6,
 		fixed: 2,
-		type: 'NUMBER',
+		type: 'FLOAT',
 		labelColor: GREY500,
 		labelFontSize: FONT_SIZE_SMALL,
 		labelFontFamily: FONT_FAMILY_DEFAULT,
@@ -71,7 +74,8 @@ export default class InputNumberSlider extends Component {
 		inputWidth: 55,
 		defaultValue: 0,
 		max: 10,
-		min: 0
+		min: 0,
+		inputStype: 'LINE'
 	};
 
 	static propTypes = {
@@ -87,7 +91,8 @@ export default class InputNumberSlider extends Component {
 		onChange: PropTypes.func,
 		defaultValue: PropTypes.number,
 		value: PropTypes.number,
-		type: PropTypes.oneOf(['INT', 'NUMBER']),
+		type: PropTypes.oneOf(['INT', 'FLOAT']),
+		inputStype: PropTypes.oneOf(['LINE', 'QUDR']),
 		max: PropTypes.number,
 		min: PropTypes.number
 	};
@@ -137,7 +142,7 @@ export default class InputNumberSlider extends Component {
 	}
 
 	render() {
-		const { height, dotRadius, label, min, max, type } = this.props;
+		const { height, dotRadius, label, min, max, type, inputStype } = this.props;
 
 		let sliderValue = SetToRange(this.state.value, min, max);
 
@@ -147,7 +152,7 @@ export default class InputNumberSlider extends Component {
 			<div style={styles.root}>
 				{labelDiv}
 				<div style={styles.input}>
-					<InputNumber
+					<Input stype={inputStype}
 						style={{height: height}}
 						value={Number(this.state.value.toFixed(this.props.fixed))}
 						onChange={this.onInputHandleChange.bind(this)}

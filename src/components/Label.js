@@ -35,22 +35,29 @@ class Label extends Component {
 
 		const parentStyle = {
 			display: 'table',
-			height: height
+			height: height,
+			overflow: 'hidden', 
+			textOverflow: 'ellipsis', 
+			whiteSpace: 'nowrap'
 		};
 
 		const defaultStyle = {
-			display: 'table-cell',
+			// display: 'table-cell',
 			verticalAlign: 'middle',
+			lineHeight: `${height}px`,
 			color: color,
 			fontSize: fontSize,
 			fontFamily: fontFamily,
+			overflow: 'hidden',
+			textOverflow: 'ellipsis',
 			whiteSpace: 'nowrap' // 强制不换行
 		};
 
 		return (
-			<div style={{display: 'inline-block', height: height}}><div style={parentStyle}>
-				<span style={Object.assign({}, defaultStyle, style)}>{content}</span>
-			</div></div>
+			//<div style={{display: 'inline-block', height: height, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}><div style={parentStyle}>
+			//	<span style={Object.assign({}, defaultStyle, style)}>{content}</span>
+			//</div></div>
+			<span style={Object.assign({}, defaultStyle, style)}>{content}</span>
 		);
 
 	}

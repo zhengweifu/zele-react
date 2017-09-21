@@ -13,7 +13,7 @@ const RaisedButtonExampleSimple = [
     "   <div>",
     "        <GridList cols={3}>",
     "            <RaisedButton type='primary' label='Primary' fullWidth={true} disable={true}/>",
-    "            <RaisedButton fullWidth={true}/>",
+    "            <RaisedButton fullWidth={true} label='Default'/>",
     "            <RaisedButton type='danger' label='Danger' fullWidth={true}/>",
     "        </GridList>",
     "   </div>",
@@ -91,10 +91,11 @@ const RaisedButtonExampleGroup = [
 const RaisedButtonPage = () => {
     return <div>
         <h2>代码演示</h2>
+        <h3>RaisedButton</h3>
         <GridList cols={2}>
             <div><GridList cols={4}>
                 <RaisedButton type='primary' label='Primary' fullWidth={true} disable={true}/>
-                <RaisedButton fullWidth={true}/>
+                <RaisedButton fullWidth={true} label='Default'/>
                 <RaisedButton type='danger' label='Danger' fullWidth={true}/>
                 <RaisedButton type='danger' label='Disabled' fullWidth={true} disabled={true}/>
             </GridList>
@@ -119,11 +120,12 @@ const RaisedButtonPage = () => {
             <div><GridList cols={4}>
                 <RaisedButton type='primary' label='Large' fullWidth={true} size='large' leftIcon={<Icon type='gKeyboardArrowLeft' />}/>
                 <RaisedButton type='primary' label='Normal' fullWidth={true} rightIcon={<Icon type='gKeyboardArrowRight' />}/>
-                <RaisedButton type='primary' label='Small' fullWidth={true} size='small' leftIcon={<Icon type='gKeyboardArrowLeft' />}/>
+                <RaisedButton type='primary' label='Small' fullWidth={true} size='small' toggle={true} toggled={true} leftIcon={<Icon type='gKeyboardArrowLeft' />}/>
                 <RaisedButton type='primary' label='Mini' fullWidth={true} size='mini' rightIcon={<Icon type='gKeyboardArrowRight' />}/>
             </GridList>
             <Highlight className='language-jsx'>{RaisedButtonExampleSize}</Highlight></div>
         </GridList>
+        <h3>ButtonGroup</h3>
         <div><GridList cols={3} center={true}>
             <ButtonGroup>
                 <RaisedButton label='left' fullWidth={true} leftIcon={<Icon type='gKeyboardArrowLeft'/>}/>
@@ -137,8 +139,8 @@ const RaisedButtonPage = () => {
                 <RaisedButton type='primary' label='right' fullWidth={true} rightIcon={<Icon type='gKeyboardArrowRight' />}/>
             </ButtonGroup>
             <ButtonGroup>
-                <RaisedButton type='danger' label='left' fullWidth={true} leftIcon={<Icon type='gKeyboardArrowLeft'/>}/>
-                <RaisedButton type='danger' label='right' fullWidth={true} rightIcon={<Icon type='gKeyboardArrowRight' />}/>
+                <RaisedButton type='danger' fullWidth={true} leftIcon={<Icon type='gKeyboardArrowLeft'/>}/>
+                <RaisedButton type='danger' fullWidth={true} rightIcon={<Icon type='gKeyboardArrowRight' />}/>
             </ButtonGroup>
         </GridList>
         <Highlight className='language-jsx'>{RaisedButtonExampleGroup}</Highlight></div>

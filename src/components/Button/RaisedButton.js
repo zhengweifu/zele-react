@@ -6,15 +6,15 @@ import { GREY300, GREY100, GREY900, BLUE600, RED600 } from '../../styles/colors'
 
 import { FONT_SIZE_DEFAULT, FONT_FAMILY_DEFAULT } from '../../styles/constants';
 
-import Left from '../Left';
+// import Left from '../Left';
 
-import VerticalMiddle from '../VerticalMiddle';
+// import VerticalMiddle from '../VerticalMiddle';
 
 import Label from '../Label';
 
-import Paper from '../Paper';
+// import Paper from '../Paper';
 
-import Overlay from '../Overlay';
+// import Overlay from '../Overlay';
 
 import IsMobile from '../../utils/IsMobile';
 
@@ -186,7 +186,6 @@ export default class RaisedButton extends Component {
 		styleButton: {},
 		bgColor: GREY100,
 		fullWidth: false,
-		label: 'Default',
 		labelColor: GREY300,
 		toggle: false,
 		toggled: false,
@@ -262,7 +261,7 @@ export default class RaisedButton extends Component {
 				break;
 		}
 
-        let nbgColor = toggle && this.state.toggled ? toggledColor ? toggledColor : lighten(bgColor, 0.2) : bgColor;
+        let nbgColor = toggle && this.state.toggled ? toggledColor ? toggledColor : darken(bgColor, 0.2) : bgColor;
 
 		nbgColor = this.state.hovered ? hoverColor ? hoverColor : lighten(nbgColor, 0.2) : nbgColor;
 
@@ -284,13 +283,20 @@ export default class RaisedButton extends Component {
 			labelStyle.color = nlabelColor;
 		}
 
-		const leftElement = leftIcon ? <VerticalMiddle style={{
-			paddingRight: label ? 5 : 0
-		}} height={styles.height}>{React.cloneElement(leftIcon, {color: nlabelColor, width: styles.iconSize, height: styles.iconSize})}</VerticalMiddle> : null;
-		const centerElement = <Label color={nlabelColor} content={label} height={styles.height}/>;
-		const rightElement = rightIcon ? <VerticalMiddle style={{
-			paddingLeft: label ? 5 : 0
-		}} height={styles.height}>{React.cloneElement(rightIcon, {color: nlabelColor, width: styles.iconSize, height: styles.iconSize})}</VerticalMiddle> : null;
+		// const leftElement = leftIcon ? <VerticalMiddle style={{
+		// 	paddingRight: label ? 5 : 0
+		// }} height={styles.height}>{React.cloneElement(leftIcon, {color: nlabelColor, width: styles.iconSize, height: styles.iconSize})}</VerticalMiddle> : '';
+		const leftElement = leftIcon ? <span style={{
+			paddingRight: label ? 5 : 0,
+			lineHeight:  `${styles.height}px`
+		}} height={styles.height}>{React.cloneElement(leftIcon, {color: nlabelColor, width: styles.iconSize, height: styles.iconSize})}</span> : '';
+		const centerElement = label ? <Label color={nlabelColor} content={label} height={styles.height} fontFamily={this.props.fontFamily} fontSize={this.props.fontSize}/> : '';
+		const rightElement = rightIcon ? <span style={{
+			paddingLeft: label ? 5 : 0,
+			lineHeight:  `${styles.height}px`
+		}} height={styles.height}>{React.cloneElement(rightIcon, {color: nlabelColor, width: styles.iconSize, height: styles.iconSize})}</span> : '';
+		
+
 		const loadingElement = this.props.isLoading ? <div style={styles.loadingParent}><div style={styles.loading}></div></div> : '';
 
 		return (
@@ -312,11 +318,11 @@ export default class RaisedButton extends Component {
 							}
 						}
 					}}>
-					<Left style={{height: '100%'}}>
+					<div style={{height: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>
 						{leftElement}
 						{centerElement}
 						{rightElement}
-					</Left>
+					</div>
 				</div>
 				{loadingElement}
 			</div>
