@@ -16,7 +16,7 @@ class ButtonGroup extends Component {
 	};
 
 	static defaultProps = {
-		borderRadius: 2,
+		borderRadius: 4,
 		shadow: true
 	};
 
@@ -59,7 +59,8 @@ class ButtonGroup extends Component {
 
 		return <Left style={{
 			boxShadow: this.props.shadow ? 'rgba(0, 0, 0, 0.1) 0px 2px 3px' : 'none',
-			display: 'inline-block'
+			display: 'inline-block',
+			verticalAlign: 'top' 
 		}}>{items}</Left>
 
 	}

@@ -191,7 +191,7 @@ export default class RaisedButton extends Component {
 		toggled: false,
 		fontSize: FONT_SIZE_DEFAULT,
 		fontFamily: FONT_FAMILY_DEFAULT,
-		borderRadius: 2,
+		borderRadius: 4,
 		shadow: true,
 		disabled: false,
 		isLoading: false

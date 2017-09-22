@@ -137,7 +137,8 @@ export default class Input extends Component {
             minHeight: 20,
             height: this.props.height,
             width: '100%',
-            outline: 'none'
+            outline: 'none',
+            padding: '0px 5px'
         };
 
         if(this.props.stype === 'LINE') {
@@ -145,7 +146,7 @@ export default class Input extends Component {
             style.borderBottomStyle = 'solid';
         } else if(this.props.stype === 'QUDR') {
             style.borderStyle = 'solid';
-            style.borderRadius = 3;
+            style.borderRadius = 4;
         }
 
         return (

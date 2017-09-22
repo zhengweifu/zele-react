@@ -7,7 +7,7 @@ import Is from '../utils/Is';
 function getStyles(props) {
 	return {
 		root: {
-			marginBottom: -props.gutter
+			// marginBottom: -props.gutter
 		},
 
 		item: {
@@ -36,8 +36,13 @@ export default class VerticalSeparation extends Component {
 		}
 
 		const wrappedChildren = children.map((child, index) => {
+			let itemStyle = {paddingBottom: this.props.gutter};
+			if(index === children.length - 1) {
+				console.log(index);
+				itemStyle.paddingBottom = 0;
+			}
 			return (
-				<div key={'vs_' + index} style={styles.item}>{child}</div>
+				<div key={'vs_' + index} style={itemStyle}>{child}</div>
 			);
 		});
 		return (
