@@ -38,7 +38,6 @@ export default class VerticalSeparation extends Component {
 		const wrappedChildren = children.map((child, index) => {
 			let itemStyle = {paddingBottom: this.props.gutter};
 			if(index === children.length - 1) {
-				console.log(index);
 				itemStyle.paddingBottom = 0;
 			}
 			return (

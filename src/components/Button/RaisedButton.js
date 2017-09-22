@@ -53,13 +53,14 @@ function getStyles(props, state) {
 	}
 	return {
 		root: {
-			// display: props.fullWidth ? 'block' : 'inline-block',
+			display: props.fullWidth ? 'block' : 'inline-block',
 			position: 'relative',
-			border: 'none',
+			boxSizing: 'border-box',
+			// border: 'none',
 			width: props.fullWidth ? '100%' : 'auto',
 			padding: 0,
 			borderRadius: props.borderRadius,
-			boxShadow: props.shadow ? 'rgba(0, 0, 0, 0.1) 0px 2px 3px' : 'none',
+			boxShadow: props.shadow ? 'rgba(0, 0, 0, 0.1) 0px 1px 3px' : 'none',
 			cursor: !props.disabled ? 'pointer' : 'not-allowed',
 			height: height,
 			outline: 'none'
@@ -67,7 +68,10 @@ function getStyles(props, state) {
 		button: {
 			padding: '0px 10px',
 			textAlign: 'center',
-			height: '100%'
+			height: '100%',
+			overflow: 'hidden', 
+			textOverflow: 'ellipsis', 
+			whiteSpace: 'nowrap'
 		},
 		item: {
 			display: 'inline-block',
@@ -95,9 +99,9 @@ function getStyles(props, state) {
 		},
 
 		loading: {
-			boxSizing: 'border',
-			border: '3px solid #f3f3f3',
-		    borderTop: '3px solid #3498db',
+			boxSizing: 'border-box',
+			border: '2px solid #f3f3f3',
+		    borderTop: '2px solid #3498db',
 		    borderRadius: '50%',
 		    width: 14,
 		    height: 14,
@@ -123,7 +127,7 @@ export default class RaisedButton extends Component {
 		this.state = {
 			hovered: false,
 			toggled: props.toggled,
-			random: null,
+			random: props.isLoading ? this.generateLoadingAnimation() : null,
 			isDown: false
 		};
 
@@ -184,7 +188,7 @@ export default class RaisedButton extends Component {
 		height: 32,
 		style: {},
 		styleButton: {},
-		bgColor: GREY100,
+		bgColor: 'rgb(255, 255, 255)',//GREY100,
 		fullWidth: false,
 		labelColor: GREY300,
 		toggle: false,
@@ -192,7 +196,7 @@ export default class RaisedButton extends Component {
 		fontSize: FONT_SIZE_DEFAULT,
 		fontFamily: FONT_FAMILY_DEFAULT,
 		borderRadius: 4,
-		shadow: true,
+		shadow: false,
 		disabled: false,
 		isLoading: false
 	};
@@ -283,46 +287,53 @@ export default class RaisedButton extends Component {
 			labelStyle.color = nlabelColor;
 		}
 
+		const borderWidth = 1, borderWidth2 = borderWidth * 2;
+
 		// const leftElement = leftIcon ? <VerticalMiddle style={{
 		// 	paddingRight: label ? 5 : 0
 		// }} height={styles.height}>{React.cloneElement(leftIcon, {color: nlabelColor, width: styles.iconSize, height: styles.iconSize})}</VerticalMiddle> : '';
 		const leftElement = leftIcon ? <span style={{
 			paddingRight: label ? 5 : 0,
-			lineHeight:  `${styles.height}px`
-		}} height={styles.height}>{React.cloneElement(leftIcon, {color: nlabelColor, width: styles.iconSize, height: styles.iconSize})}</span> : '';
-		const centerElement = label ? <Label color={nlabelColor} content={label} height={styles.height} fontFamily={this.props.fontFamily} fontSize={this.props.fontSize}/> : '';
+			lineHeight:  `${styles.height - borderWidth2}px`
+		}}>{React.cloneElement(leftIcon, {color: nlabelColor, width: styles.iconSize, height: styles.iconSize})}</span> : '';
+		const centerElement = label ? <Label color={nlabelColor} content={label} height={styles.height - borderWidth2} fontFamily={this.props.fontFamily} fontSize={this.props.fontSize}/> : '';
 		const rightElement = rightIcon ? <span style={{
 			paddingLeft: label ? 5 : 0,
-			lineHeight:  `${styles.height}px`
-		}} height={styles.height}>{React.cloneElement(rightIcon, {color: nlabelColor, width: styles.iconSize, height: styles.iconSize})}</span> : '';
+			lineHeight:  `${styles.height - borderWidth2}px`
+		}}>{React.cloneElement(rightIcon, {color: nlabelColor, width: styles.iconSize, height: styles.iconSize})}</span> : '';
 		
 
 		const loadingElement = this.props.isLoading ? <div style={styles.loadingParent}><div style={styles.loading}></div></div> : '';
-
+		
+		const mborder = darken(nbgColor, 0.2);
+		// console.log(style);
 		return (
-			<div disabled={disabled} style={Object.assign({backgroundColor: nbgColor}, styles.root, style)}>
-				<div style={Object.assign({}, styles.button, styleButton)} 
-					onMouseLeave={this.handleMouseLeave.bind(this)}
-					onMouseEnter={this.handleMouseEnter.bind(this)}
-					onMouseDown={e => {
-						if(!disabled) this.setState({isDown: true});
-					}} onMouseUp={e => {
-						if(!disabled) this.setState({isDown: false});
-					}} onClick={e => { 
-						if(disabled) {
-							if(toggle) {
-	                            this.setState({toggled: !this.state.toggled});
-	                        }
-							if(onClick) {
-								onClick(e);
-							}
-						}
-					}}>
-					<div style={{height: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>
-						{leftElement}
-						{centerElement}
-						{rightElement}
-					</div>
+			<div disabled={disabled} style={Object.assign({
+				backgroundColor: nbgColor,
+				borderWidth: borderWidth,
+				borderColor: mborder,
+				borderStyle: 'solid'
+			}, styles.root, style)}
+			onMouseLeave={this.handleMouseLeave.bind(this)}
+			onMouseEnter={this.handleMouseEnter.bind(this)}
+			onMouseDown={e => {
+				if(!disabled) this.setState({isDown: true});
+			}} onMouseUp={e => {
+				if(!disabled) this.setState({isDown: false});
+			}} onClick={e => { 
+				if(!disabled) {
+					if(toggle) {
+                        this.setState({toggled: !this.state.toggled});
+                    }
+					if(onClick) {
+						onClick(e);
+					}
+				}
+			}}>
+				<div style={Object.assign({}, styles.button, styleButton)}>
+					{leftElement}
+					{centerElement}
+					{rightElement}
 				</div>
 				{loadingElement}
 			</div>

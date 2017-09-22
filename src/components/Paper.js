@@ -23,7 +23,7 @@ export default class Paper extends Component {
 	static defaultProps = {
 		disable: false,
 		bgColor: '#fff',
-		roundSize: 2
+		roundSize: 4
 	};
 
 	render() {

@@ -118,8 +118,8 @@ const RaisedButtonPage = () => {
             </GridList>
             <Highlight className='language-jsx'>{RaisedButtonExampleIcon}</Highlight></div>
             <div><GridList cols={4}>
-                <RaisedButton type='primary' label='Large' fullWidth={true} size='large' leftIcon={<Icon type='gKeyboardArrowLeft' />}/>
-                <RaisedButton type='primary' label='Normal' fullWidth={true} rightIcon={<Icon type='gKeyboardArrowRight' />}/>
+                <RaisedButton type='primary' isLoading={true} label='Large' fullWidth={true} size='large' leftIcon={<Icon type='gKeyboardArrowLeft' />}/>
+                <RaisedButton type='danger' isLoading={true} label='Normal' fullWidth={true} rightIcon={<Icon type='gKeyboardArrowRight' />}/>
                 <RaisedButton type='primary' label='Small' fullWidth={true} size='small' toggle={true} toggled={true} leftIcon={<Icon type='gKeyboardArrowLeft' />}/>
                 <RaisedButton type='primary' label='Mini' fullWidth={true} size='mini' rightIcon={<Icon type='gKeyboardArrowRight' />}/>
             </GridList>

@@ -24,7 +24,7 @@ export { default as SubMenu } from './components/Menu/SubMenu';
 export { default as MenuItem } from './components/Menu/MenuItem';
 export { default as MenuItemGroup } from './components/Menu/MenuItemGroup';
 
-export { default as Modal } from './components/Modal';
+export { default as Modal } from './components/Modal/Modal';
 export { default as Overlay } from './components/Overlay';
 export { default as Paper } from './components/Paper';
 export { default as Popover } from './components/Popover';

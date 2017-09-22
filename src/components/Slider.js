@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import { CYAN500, GREY300 } from '../styles/colors';
+import { BLUE600, GREY300 } from '../styles/colors';
 
 import SetToRange from '../utils/SetToRange';
 
@@ -91,7 +91,7 @@ export default class Slider extends Component {
 	}
 
 	componentDidMount() {
-		console.log('render end');
+		// console.log('render end');
 	}
 
 	static propTypes = {
@@ -111,7 +111,7 @@ export default class Slider extends Component {
 	static defaultProps = {
 		barBgColor: GREY300,
 		barHeight: 3,
-		dotBgColor: CYAN500,
+		dotBgColor: BLUE600,
 		dotRadius: 6,
 		defaultValue: 0.5,
 		max: 1,

@@ -31,7 +31,8 @@ class ButtonGroup extends Component {
 				borderTopLeftRadius: 0,
 				borderTopRightRadius: 0,
 				borderBottomRightRadius: 0,
-				borderBottomLeftRadius: 0
+				borderBottomLeftRadius: 0,
+				borderLeftStyle: 'solid'
 			};
 
 			if(index === 0) {
@@ -42,17 +43,24 @@ class ButtonGroup extends Component {
 				_style.borderBottomRightRadius = this.props.borderRadius;
 			}
 
+			let showLeftBorder = true;
+
 			if(index > 0) {
-				if(item.props.type === 'default') {
-					_style.borderLeft = '1px solid rgb(200, 200, 200)';
-				} else {
-					_style.borderLeft = '1px solid #eee';
-				}
+				showLeftBorder = false;
+				// if(item.props.type === 'default') {
+					// _style.borderLeft = '1px solid rgb(200, 200, 200)';
+				// } else {
+					// _style.borderLeft = '1px solid #eee';
+				// }
+				_style.borderLeftStyle = 'none';
 			}
+
+			// console.log(showLeftBorder);
 
 			return React.cloneElement(item, {
 				key: index, 
-				style: _style, 
+				style: _style,
+				// showLeftBorder: showLeftBorder,
 				shadow: false
 			});
 		});

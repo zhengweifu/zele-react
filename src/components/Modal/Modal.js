@@ -1,24 +1,26 @@
 import React, { Component, PropTypes } from 'react';
 
-import Overlay from './Overlay';
+import Overlay from '../Overlay';
 
-import Paper from './Paper';
+import Paper from '../Paper';
 
-import { OVERLAY_ZINDEX, MODAL_ZINDEX, MODAL_MAX_WIDTH } from '../styles/constants';
+import { OVERLAY_ZINDEX, MODAL_ZINDEX, MODAL_MAX_WIDTH } from '../../styles/constants';
 
-import { CYAN500, GREY300, PINK300 } from '../styles/colors';
+import { CYAN500, GREY300, GREY900, PINK300 } from '../../styles/colors';
 
-import { FONT_SIZE_DEFAULT, FONT_FAMILY_DEFAULT } from '../styles/constants';
+import { FONT_SIZE_DEFAULT, FONT_FAMILY_DEFAULT } from '../../styles/constants';
 
-import IconButton from './Button/IconButton';
+import IconButton from '../Button/IconButton';
 
-import SvgIcon from './SvgIcon';
+import SvgIcon from '../SvgIcon';
 
-import { gClear } from '../svgIcons/google/Content';
+import { gClear } from '../../svgIcons/google/Content';
 
-require('../csses/clearfix.css');
+import Left from '../Left';
 
-import RaisedButton from './Button/RaisedButton';
+require('../../csses/clearfix.css');
+
+import RaisedButton from '../Button/RaisedButton';
 
 function getStyles(props, state) {
 	const padding = 20;
@@ -29,7 +31,7 @@ function getStyles(props, state) {
 			left: 0,
 			right:0,
 			display: state.open ? 'block' : 'none',
-			width: '75%',
+			width: props.width,
 			maxWidth: MODAL_MAX_WIDTH,
 			margin: '80px auto',
 			zIndex: MODAL_ZINDEX
@@ -84,6 +86,9 @@ export default class Modal extends Component {
 		splitColor: PropTypes.string,
 		fontFamily: PropTypes.string,
 		titleFontSize: PropTypes.number,
+		width: PropTypes.number,
+		useCloseIcon: PropTypes.bool,
+		useCancelButton: PropTypes.bool,
 		useActions: PropTypes.bool,
 		actions: PropTypes.node,
 		onOkClick: PropTypes.func,
@@ -95,10 +100,13 @@ export default class Modal extends Component {
 		overlayStyle: {},
 		style: {},
 		useActions: true,
+		width: 400,
 		splitColor: GREY300,
-		titleColor: GREY300,
+		titleColor: GREY900,
+		useCloseIcon: true,
+		useCancelButton: true,
 		fontFamily: FONT_FAMILY_DEFAULT,
-		titleFontSize: FONT_SIZE_DEFAULT
+		titleFontSize: 15
 	};
 
 	componentWillReceiveProps(newProps) {
@@ -112,18 +120,21 @@ export default class Modal extends Component {
 
 		if(React.Children.count(actions) <= 0 && useActions) {
 			actions = [
-				<RaisedButton label='取消' style={{marginRight: 10, padding: '0px 20px'}} bgColor={PINK300} onClick={e => {
-					this.setState({open : false});
-					if(onCancelClick) {
-						onCancelClick(e, false);
-					}
-				}}/>,
-				<RaisedButton label='确定' style={{padding: '0px 20px'}} bgColor={CYAN500} onClick={e => {
+				<RaisedButton label='确定' style={{padding: '0px 20px'}} type='primary' onClick={e => {
 					if(onOkClick) {
 						onOkClick(e);
 					}
 				}}/>
 			];
+
+			if(this.props.useCancelButton) {
+				actions.splice(0, 0, <RaisedButton label='取消' style={{marginRight: 10, padding: '0px 20px'}} type='danger' onClick={e => {
+					this.setState({open : false});
+					if(onCancelClick) {
+						onCancelClick(e, false);
+					}
+				}}/>)
+			}
 		} 
 
 		const styles = getStyles(this.props, this.state);
@@ -131,14 +142,14 @@ export default class Modal extends Component {
 		const footer = actions && useActions ? 
 				<div style={styles.modalFooter}>
 					<div className='clearfix'><div style={{float: 'right'}}>
-						{ React.Children.toArray(actions) }
+						<Left>{ React.Children.toArray(actions) }</Left>
 					</div></div>
 				</div> : '';
 
 		const header = title && title.length > 0 ?
 				<div style={styles.modalHeader}>
 					{title}
-					<div style={styles.close} onClick={e => {
+					{this.props.useCloseIcon ? <div style={styles.close} onClick={e => {
 						this.setState({open: false});
 						if(onCancelClick) {
 							onCancelClick(e, false);
@@ -147,7 +158,7 @@ export default class Modal extends Component {
 						<IconButton color={GREY300} hoverColor={PINK300} padding={0} icon={<SvgIcon>
 							<path d={gClear}/>
 						</SvgIcon>}/>
-					</div>
+					</div> : ''}
 				</div> : '';
 		return (
 			<div>

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import { CYAN500, GREY300, GREY500 } from '../styles/colors';
+import { BLUE600, GREY300, GREY500 } from '../styles/colors';
 
 export default class Input extends Component {
     constructor(props) {
@@ -14,7 +14,11 @@ export default class Input extends Component {
 
     static propTypes = {
         type: PropTypes.oneOf(['INT', 'FLOAT', 'STRING']),
-        value: PropTypes.number,
+        value: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.number
+        ]),
+        height: PropTypes.number,
         onChange: PropTypes.func,
         style: PropTypes.object,
         stype: PropTypes.oneOf(['LINE', 'QUDR']),
@@ -24,6 +28,7 @@ export default class Input extends Component {
         value: 0,
         type: 'STRING',
         floatingLabelText: '',
+        height: 25,
         style: {},
         stype: 'LINE'
     };
@@ -127,18 +132,19 @@ export default class Input extends Component {
         //     />
         // );
 
-        let defaultBorderColor = GREY300, activeBorderColor = CYAN500;
+        let defaultBorderColor = GREY300, activeBorderColor = BLUE600;
 
         let style = {
             boxSizing: 'border-box',
-            color: this.state.active ? CYAN500 : GREY500,
-            borderWidth: this.state.active ? 2 : 1,
+            color: this.state.active ? BLUE600 : GREY500,
+            borderWidth: 1,
             borderColor: this.state.active ? activeBorderColor : defaultBorderColor,
             minHeight: 20,
             height: this.props.height,
             width: '100%',
             outline: 'none',
-            padding: '0px 5px'
+            padding: '0px 5px',
+            transition: 'all 0.3s cubic-bezier(.645,.045,.355,1)'
         };
 
         if(this.props.stype === 'LINE') {
