@@ -6,7 +6,7 @@ import Label from '../Label';
 
 import VerticalMiddle from '../VerticalMiddle';
 
-import Left from '../Left';
+// import Left from '../Left';
 
 class MenuItem extends MixinComponent {
 	constructor(props) {

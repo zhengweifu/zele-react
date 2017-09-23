@@ -9,6 +9,8 @@ import RaisedButton from '../../../src/components/Button/RaisedButton';
 
 import SimpleItem from '../../../src/components/SimpleItem';
 
+import Select from '../../../src/components/Select';
+
 import MessageBox from '../../../src/components/Modal/MessageBox';
 
 const InputSliderPage = () => {
@@ -48,6 +50,15 @@ const InputSliderPage = () => {
 		<GridList cols={8}>
 			<SimpleItem title='体育场景测试' imgSrc='../cover.jpg'/>
 		</GridList>
+
+		<Select items={[
+			'111111', '222222', '333333', '444444', '555555', '666666'
+		]}/>
+
+		<Select fullWidth={true} stype='QUDR' items={[
+			'111111', '222222', '333333', '444444', '555555', '666666'
+		]}/>
+
 		</VerticalSeparation>
 	</div>;
 };

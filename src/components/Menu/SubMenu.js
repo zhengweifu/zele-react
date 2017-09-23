@@ -78,7 +78,7 @@ class SubMenu extends MixinComponent {
 
 		const iconSize = fontSize + 4, arrowSize = 18;
 		const arrowStyle = {
-			margin: '0 0 0 10',
+			// margin: '0 0 0 10',
 		};
 
 		const iconStyle = {
@@ -92,8 +92,13 @@ class SubMenu extends MixinComponent {
 
 		const iconElement = icon !== undefined ? <span style={{lineHeight: `${height}px`}}>{React.cloneElement(icon, {color: textColor, width: iconSize, height: iconSize, style: iconStyle})}</span> : '';
 
-		const labelElement = <Label content={label} fontFamily={fontFamily} fontSize={fontSize} color={textColor} height={height}/>;
-		const arrowElement = <span style={{lineHeight: `${height}px`}}><SvgIcon color={textColor} width={arrowSize} height={arrowSize} style={arrowStyle}>
+		const labelElement = <Label style={{paddingRight: 24}} content={label} fontFamily={fontFamily} fontSize={fontSize} color={textColor} height={height}/>;
+		const arrowElement = <span style={{
+			lineHeight: `${height}px`,
+			position: 'absolute',
+			top: 0,
+			right: 0
+		}}><SvgIcon color={textColor} width={arrowSize} height={arrowSize} style={arrowStyle}>
 				<path d={this.state.open ? gKeyboardArrowDown : gKeyboardArrowRight}/>
 			</SvgIcon></span>;
 		const childRootElement = rootMode === 'vertical' || index > 1 ? <div style={{
@@ -128,7 +133,8 @@ class SubMenu extends MixinComponent {
 			<div style={{
 				overflow: 'hidden', 
 				textOverflow: 'ellipsis', 
-				whiteSpace: 'nowrap'
+				whiteSpace: 'nowrap',
+				position: 'relative'
 			}} onClick={e => {
 				this.setState({open: !this.state.open});
 				if(onClick) {

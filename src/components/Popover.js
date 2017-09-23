@@ -15,14 +15,16 @@ function getStyles(props, state) {
 		zDepth
 	} = props;
 
-	let Temp = {position: 'relative',
-			top: 0,
-			left: 0,
-			width: '100%'};
+	let Temp = {
+		position: 'relative',
+		top: 0,
+		left: 0,
+		width: '100%'
+	};
 
-	if(props.isopacity){
+	if(props.isopacity) {
 		Temp.opacity = state.open  ? 1 : 0;
-	}else{
+	} else {
 		Temp.display = state.open ? 'block' : 'none';
 	}
 
@@ -34,7 +36,7 @@ function getStyles(props, state) {
 			position: 'absolute',
 			top: 0,
 			left: 0,
-			padding: GUTTER,
+			// padding: GUTTER,
 			width: '100%',
 			zIndex: zDepth,
 		}
@@ -54,18 +56,30 @@ export default class Popover extends Component {
 		open: PropTypes.bool,
 		isopacity: PropTypes.bool,
  		style: PropTypes.object,
+ 		otherElements: PropTypes.array,
  		zDepth: PropTypes.number
 	};
 
 	static defaultProps = {
 		isopacity:false,
 		open: false,
-		zDepth: 10
+		zDepth: 10,
+		otherElements: []
 	};
 
 	handleRequestClose = (e) => {
 		// console.log( Dom.isDescendant(this.element, e.target), document.documentElement.contains(e.target));
-		if(!(e.target == this.element || Dom.isDescendant(this.element, e.target))) {
+		const elements = [this.element, ...this.props.otherElements];
+		let isExecute = true;
+		for(let ele of elements) {
+			if(e.target == ele || Dom.isDescendant(ele, e.target)) {
+				isExecute = false;
+				break;
+			}
+		}
+
+		// if(!(e.target == this.element || Dom.isDescendant(this.element, e.target))) {
+		if(isExecute) {
 			if(this.state.open) {
 				this.setState({open : false});
 			}

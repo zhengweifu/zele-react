@@ -10,13 +10,13 @@ import IconButton from './Button/IconButton';
 
 import SetToRange from '../utils/SetToRange';
 
-import { CYAN500, GREY500 } from '../styles/colors';
+import { BLUE600, GREY500 } from '../styles/colors';
 
 import { FONT_SIZE_DEFAULT, FONT_FAMILY_DEFAULT } from '../styles/constants';
 
 import { gLock, gLockOpen } from '../svgIcons/google/Action';
 
-const lockColor = CYAN500;
+const lockColor = BLUE600;
 
 const unLockColor = GREY500;
 
