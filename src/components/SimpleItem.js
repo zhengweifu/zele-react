@@ -1,5 +1,9 @@
 import React, { Component, PropTypes} from 'react';
 
+import { BLUE600, GREY300 } from '../styles/colors';
+
+import { FONT_SIZE_DEFAULT, FONT_FAMILY_DEFAULT } from '../styles/constants';
+
 export default class SimpleItem extends Component {
   constructor(props) {
     super(props);
@@ -35,12 +39,27 @@ export default class SimpleItem extends Component {
       <div
         onClick={this.onHandleClick.bind(this)}
         style={{
-          padding: this.state.active || this.props.defaultBorderColor ? 4 : 5,
+          // padding: this.state.active || this.props.defaultBorderColor ? 4 : 5,
+          borderRadius: this.props.borderRadius,
           textAlign: 'center',
           border: border
         }}>
-        {this.props.children}
-        {this.props.title ? <div style={{fontSize: 12}}>{this.props.title}</div> : ''}
+        <div style={{
+          padding: 4,
+          // display: 'inline-block'
+        }}>
+          {this.props.imgSrc ? <img src={this.props.imgSrc} style={{width: '100%', height: 'auto', verticalAlign: 'top'}}/> : ''}
+          {this.props.children}
+        </div>
+        {this.props.title ? <div style={{
+          padding: 8,
+          fontSize: FONT_SIZE_DEFAULT,
+          fontFamily: FONT_FAMILY_DEFAULT,
+          borderTop: border,
+          overflow: 'hidden', 
+          textOverflow: 'ellipsis', 
+          whiteSpace: 'nowrap'
+        }}>{this.props.title}</div> : ''}
       </div>
     );
   }
@@ -48,7 +67,9 @@ export default class SimpleItem extends Component {
 
 SimpleItem.defaultProps = {
   active: false,
-  activeColor: '#0f0'
+  activeColor: BLUE600,
+  defaultBorderColor: GREY300,
+  borderRadius: 4
 };
 
 SimpleItem.propTypes = {
@@ -56,5 +77,7 @@ SimpleItem.propTypes = {
   defaultBorderColor: PropTypes.string,
   activeColor: PropTypes.string,
   title: PropTypes.string,
+  borderRadius: PropTypes.number,
+  imgSrc: PropTypes.string,
   onClick: PropTypes.func
 };

@@ -8,15 +8,17 @@ import Label from '../Label';
 
 import Popover from '../Popover';
 
-import Left from '../Left';
+// import Left from '../Left';
 
-import VerticalMiddle from '../VerticalMiddle';
+// import VerticalMiddle from '../VerticalMiddle';
 
 import SvgIcon from '../SvgIcon';
 
 import { gKeyboardArrowRight,  gKeyboardArrowDown } from '../../svgIcons/google/Hardware';
 
 import cloneElements from './cloneElements';
+
+import { fade, lighten, darken } from '../../utils/colorManipulator';
 
 class SubMenu extends MixinComponent {
 	constructor(props) {
@@ -39,7 +41,7 @@ class SubMenu extends MixinComponent {
 	};
 
 	static defaultProps = {
-		label: 'SubMenu',
+		label: 'SubMenu-SubMenu-SubMenu',
 		open: false,
 	};
 
@@ -74,7 +76,7 @@ class SubMenu extends MixinComponent {
 			display: 'inline-block'
 		};
 
-		const iconSize = fontSize + 4, arrowSize = 20;
+		const iconSize = fontSize + 4, arrowSize = 18;
 		const arrowStyle = {
 			margin: '0 0 0 10',
 		};
@@ -88,12 +90,12 @@ class SubMenu extends MixinComponent {
 
 		let _children = cloneElements(children);
 
-		const iconElement = icon !== undefined ? <VerticalMiddle height={height}>{React.cloneElement(icon, {color: textColor, width: iconSize, height: iconSize, style: iconStyle})}</VerticalMiddle> : '';
+		const iconElement = icon !== undefined ? <span style={{lineHeight: `${height}px`}}>{React.cloneElement(icon, {color: textColor, width: iconSize, height: iconSize, style: iconStyle})}</span> : '';
 
 		const labelElement = <Label content={label} fontFamily={fontFamily} fontSize={fontSize} color={textColor} height={height}/>;
-		const arrowElement = <VerticalMiddle height={height}><SvgIcon color={textColor} width={arrowSize} height={arrowSize} style={arrowStyle}>
+		const arrowElement = <span style={{lineHeight: `${height}px`}}><SvgIcon color={textColor} width={arrowSize} height={arrowSize} style={arrowStyle}>
 				<path d={this.state.open ? gKeyboardArrowDown : gKeyboardArrowRight}/>
-			</SvgIcon></VerticalMiddle>;
+			</SvgIcon></span>;
 		const childRootElement = rootMode === 'vertical' || index > 1 ? <div style={{
 			display: this.state.open ? 'block' : 'none',
 			margin: `0px ${-padding * index}px`,
@@ -101,11 +103,17 @@ class SubMenu extends MixinComponent {
 			backgroundColor: bgColor
 		}}>{_children}</div>:
 			<Popover open={this.state.open} isUseSlideAnimation={true} maxHeight={250} outClickClose={false} style={PCPopoverStyle} onRequestClose={e => this.setState({activeIndex: -1, open: false})}>
-				<div style={{margin: `0px ${-padding}px`, backgroundColor: bgColor}}>{_children}</div>
+				<div style={{margin: `0px ${-padding}px`, backgroundColor: bgColor,
+					// borderWidth: 1,
+					// borderColor: darken(bgColor, 0.1),
+					// borderStyle:  menuProps.borderColor ? 'solid' : 'none',
+					// borderTopStyle: 'none'
+					boxShadow: rootMode !== 'vertical' ? `${darken(bgColor, 0.1)} 1px 1px 3px` : 'none'
+				}}>{_children}</div>
 			</Popover>;
 		return <div style={{
 				// boxSizing: 'border-box',
-				padding: `0px ${padding * index}px`
+				padding: `0px ${padding * index}px`,
 			}} onMouseOver={e => {
 				this.setState({hover: true});
 				if(rootMode !== 'vertical') {
@@ -117,16 +125,20 @@ class SubMenu extends MixinComponent {
 					this.setState({open: false});
 				}
 			}}>
-			<div onClick={e => {
+			<div style={{
+				overflow: 'hidden', 
+				textOverflow: 'ellipsis', 
+				whiteSpace: 'nowrap'
+			}} onClick={e => {
 				this.setState({open: !this.state.open});
 				if(onClick) {
 					onClick();
 				}
-			}}><Left>
+			}}>
 				{iconElement}
 				{labelElement}
 				{arrowElement}
-			</Left></div>
+			</div>
 			{childRootElement}
 		</div>;
 	}

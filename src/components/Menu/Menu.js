@@ -76,7 +76,7 @@ class Menu extends Component {
 		if(theme === 'dark') {
 			bgColor = GREY800;
 		} else if(theme === 'light') {
-			bgColor = GREY100;
+			bgColor = '#fff';
 		}
 
 		const rootStyle = {
@@ -88,7 +88,7 @@ class Menu extends Component {
 		let PCMenuBar = <Left style={rootStyle}>{_children}</Left>;
 		if(mode === 'vertical') {
 			PCMenuBar = <div style={Object.assign({}, rootStyle, {
-				display: 'inline-block'
+				// display: 'inline-block'
 			})}>{_children}</div>;
 		}
 

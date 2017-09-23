@@ -7,7 +7,7 @@ import GridList from '../../../src/components/Grid/GridList';
 
 import RaisedButton from '../../../src/components/Button/RaisedButton';
 
-import Modal from '../../../src/components/Modal/Modal';
+import SimpleItem from '../../../src/components/SimpleItem';
 
 import MessageBox from '../../../src/components/Modal/MessageBox';
 
@@ -44,6 +44,10 @@ const InputSliderPage = () => {
 				alert('最大值 ' + value);
 			});
 		}}/></GridList>
+
+		<GridList cols={8}>
+			<SimpleItem title='体育场景测试' imgSrc='../cover.jpg'/>
+		</GridList>
 		</VerticalSeparation>
 	</div>;
 };

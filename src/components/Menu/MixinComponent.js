@@ -70,9 +70,10 @@ class MixinComponent extends Component {
 			result.itemActiveBgColor = BLUE600;
 			result.itemColor = GREY300;
 		} else if(theme === 'light'){
-			result.subBgColor = GREY300;
-			result.itemActiveBgColor = BLUE100;
+			result.subBgColor = GREY50;
+			result.itemActiveBgColor = BLUE600;
 			result.itemColor = GREY800;
+			result.borderColor = GREY300;
 		}
 
 		return result;

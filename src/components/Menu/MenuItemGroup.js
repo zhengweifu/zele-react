@@ -8,9 +8,9 @@ import Label from '../Label';
 
 import Popover from '../Popover';
 
-import Left from '../Left';
+// import Left from '../Left';
 
-import VerticalMiddle from '../VerticalMiddle';
+// import VerticalMiddle from '../VerticalMiddle';
 
 import SvgIcon from '../SvgIcon';
 
@@ -74,7 +74,7 @@ class MenuItemGroup extends MixinComponent {
 			margin: `${marginSize} 5 ${marginSize} 0`
 		};
 
-		const iconElement = icon !== undefined ? <VerticalMiddle height={height}>{React.cloneElement(icon, {color: textColor, width: iconSize, height: iconSize, style: iconStyle})}</VerticalMiddle> : '';
+		const iconElement = icon !== undefined ? <span style={{lineHeight: `${height}px`}}>{React.cloneElement(icon, {color: textColor, width: iconSize, height: iconSize, style: iconStyle})}</span> : '';
 
 		const labelElement = <Label content={label} fontFamily={fontFamily} fontSize={fontSize} color={textColor} height={height}/>;
 		const childRootElement = rootMode === 'vertical' || index > 1 ? <div style={{
@@ -87,12 +87,15 @@ class MenuItemGroup extends MixinComponent {
 			</Popover>;
 		return <div style={{
 				// backgroundColor: this.state.hover ? activeBgColor : 'transparent',
-				padding: `0px ${padding * index}px`
+				padding: `0px ${padding * index}px`,
+				overflow: 'hidden', 
+				textOverflow: 'ellipsis', 
+				whiteSpace: 'nowrap'
 			}}>
-			<Left>
-				{iconElement}
-				{labelElement}
-			</Left>
+
+			{iconElement}
+			{labelElement}
+			
 			{childRootElement}
 		</div>;
 	}
