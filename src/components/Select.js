@@ -80,7 +80,7 @@ class Select extends Component {
       backgroundColor: '#fff',
       borderRadius: stype === 'QUDR' ? borderRadius : 0
     };
-    console.log(stype);
+    // console.log(stype);
     if(stype === 'LINE') {
       defaultStyle.borderBottom = `${borderWidth}px solid ${this.state.open ? activeColor : GREY300}`;
     } else {
@@ -104,7 +104,8 @@ class Select extends Component {
         <span style={iconStyle}><SvgIcon color={this.state.open ? activeColor : GREY800} width={iconSize} height={iconSize}><path d={this.state.open ? gKeyboardArrowDown : gKeyboardArrowRight} /></SvgIcon></span>
       </div>
       <Popover otherElements={[this.element]} open={this.state.open} style={{
-        marginTop: 4
+        marginTop: 4,
+        width: '100%'
       }} isUseSlideAnimation={true} maxHeight={250} outClickClose={false} onRequestClose={e => this.setState({open: false})}>
         {this.renderItems()}
       </Popover>

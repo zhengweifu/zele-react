@@ -11,6 +11,8 @@ import SimpleItem from '../../../src/components/SimpleItem';
 
 import Select from '../../../src/components/Select';
 
+import ColorPicker from '../../../src/components/ColorPicker';
+
 import MessageBox from '../../../src/components/Modal/MessageBox';
 
 const InputSliderPage = () => {
@@ -58,6 +60,9 @@ const InputSliderPage = () => {
 		<Select fullWidth={true} stype='QUDR' items={[
 			'111111', '222222', '333333', '444444', '555555', '666666'
 		]}/>
+
+		<ColorPicker />
+		<ColorPicker value='#ff0' fullWidth={true}/>
 
 		</VerticalSeparation>
 	</div>;

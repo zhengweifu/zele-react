@@ -37,7 +37,7 @@ function getStyles(props, state) {
 			top: 0,
 			left: 0,
 			// padding: GUTTER,
-			width: '100%',
+			// width: '100%',
 			zIndex: zDepth,
 		}
 	};
