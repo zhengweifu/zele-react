@@ -18,19 +18,28 @@ export default class Input extends Component {
             PropTypes.string,
             PropTypes.number
         ]),
+        min: PropTypes.number,
+        max: PropTypes.number,
+        maxLength: PropTypes.number,
         height: PropTypes.number,
+        regExp: PropTypes.string,
         onChange: PropTypes.func,
         style: PropTypes.object,
         stype: PropTypes.oneOf(['LINE', 'QUDR']),
+        before: PropTypes.node,
+        after: PropTypes.node
     };
 
     static defaultProps = {
-        value: 0,
+        value: '',
+        min: -10000,
+        max: 10000,
         type: 'STRING',
         floatingLabelText: '',
         height: 25,
         style: {},
-        stype: 'LINE'
+        stype: 'LINE',
+        maxLength: 100
     };
 
     onHandleChange(event) {
@@ -75,6 +84,9 @@ export default class Input extends Component {
 
             ovalue = parseInt(_vals.join(''));
 
+            if(ovalue > this.props.max) ovalue = this.props.max;
+            else if(ovalue < this.props.min) ovalue = this.props.min;
+
         } else if(this.props.type === 'FLOAT') {
 
             val = val.replace(/[^0-9\.\-]/g,'');
@@ -99,8 +111,18 @@ export default class Input extends Component {
             }
 
             ovalue = parseFloat(_vals.join(''));
+
+            if(ovalue > this.props.max) ovalue = this.props.max;
+            else if(ovalue < this.props.min) ovalue = this.props.min;
         } else {
             // todo
+            if(this.props.regExp) {
+                ovalue = ovalue.replace(new RegExp(this.props.regExp, 'g'), '');
+            } 
+
+            if(ovalue.length > this.props.maxLength) {
+                ovalue = ovalue.substr(0, this.props.maxLength);
+            }
         }
 
 
@@ -141,29 +163,77 @@ export default class Input extends Component {
             borderColor: this.state.active ? activeBorderColor : defaultBorderColor,
             minHeight: 20,
             height: this.props.height,
-            width: '100%',
+            verticalAlign: 'middle',
+            // vertical-align: middle
+            display: 'table-cell',
             outline: 'none',
             padding: '0px 5px',
             transition: 'all 0.3s cubic-bezier(.645,.045,.355,1)'
         };
+
+        const baStyle = Object.assign({width: 1}, style);
+
+        if(this.props.stype === 'QUDR') {
+            baStyle.borderTopStyle =  'solid';
+            baStyle.borderBottomStyle = 'solid';
+        }
+
+        const bStyle = Object.assign({}, baStyle);
+
+        const aStyle = Object.assign({}, baStyle);
+
+        if(this.props.stype === 'QUDR') {
+            bStyle.borderLeftStyle = 'solid';
+            bStyle.borderTopLeftRadius = 4;
+            bStyle.borderBottomLeftRadius = 4;
+
+            aStyle.borderRightStyle = 'solid';
+            aStyle.borderTopRightRadius = 4;
+            aStyle.borderBottomRightRadius = 4;
+        }
+
+        style.width = '100%';
 
         if(this.props.stype === 'LINE') {
             style.borderStyle = 'none';
             style.borderBottomStyle = 'solid';
         } else if(this.props.stype === 'QUDR') {
             style.borderStyle = 'solid';
-            style.borderRadius = 4;
+            if(!this.props.before && !this.props.after) {
+                style.borderRadius = 4;
+            } else if(!this.props.before && this.props.after) {
+                style.borderTopLeftRadius = 4;
+                style.borderBottomLeftRadius = 4;
+            } else if(this.props.before && !this.props.after) {
+                style.borderTopRightRadius = 4;
+                style.borderBottomRightRadius = 4;
+            }
+            
         }
 
+        const rootStyle = {
+            width: '100%',
+            display: 'table'
+        };
+
+
+        const beforeElement = this.props.before ? <span style={bStyle}>{this.props.before}</span> : '';
+
+        const afterElement = this.props.after ? <span style={aStyle}>{this.props.after}</span> : '';
+
         return (
-            <input
-                style={Object.assign(style, this.props.style)}
-                placeholder={this.props.placeholder}
-                value={this.state.value}
-                onFocus={e => this.setState({active: true})}
-                onBlur={e => this.setState({active: false})}
-                onChange={this.onHandleChange.bind(this)}
-                />
+            <span style={rootStyle}>
+                {beforeElement}
+                <input
+                    style={Object.assign(style, this.props.style)}
+                    placeholder={this.props.placeholder}
+                    value={this.state.value}
+                    onFocus={e => this.setState({active: true})}
+                    onBlur={e => this.setState({active: false})}
+                    onChange={this.onHandleChange.bind(this)}
+                    />
+                {afterElement}
+            </span>
         );
     }
 }

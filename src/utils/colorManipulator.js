@@ -198,7 +198,7 @@ export function toHSV(color) {
   }
 };
 
-export function HSVToString(h, s, v) {
+export function HSVToRGB1(h, s, v) {
   h = bound01(h * 360, 360) * 6;
   s = bound01(s * 100, 100);
   v = bound01(v * 100, 100);
@@ -213,7 +213,21 @@ export function HSVToString(h, s, v) {
   const g = [t, v, v, q, p, p][mod];
   const b = [p, p, t, v, v, q][mod];
 
-  return `rgb(${Math.round(r * 255)}, ${Math.round(g * 255)}, ${Math.round(b * 255)})`;
+  return {r: r, g: g, b: b};
+}
+
+export function HSVToRGB255(h, s, v) {
+  const rgb = HSVToRGB1(h, s, v);
+  return {
+    r: Math.round(rgb.r * 255),
+    g: Math.round(rgb.g * 255),
+    b: Math.round(rgb.b * 255)
+  }
+}
+
+export function HSVToString(h, s, v) {
+  const rgb = HSVToRGB255(h, s, v)
+  return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
 }
 
 /**

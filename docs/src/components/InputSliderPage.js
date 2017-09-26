@@ -15,15 +15,17 @@ import ColorPicker from '../../../src/components/ColorPicker';
 
 import MessageBox from '../../../src/components/Modal/MessageBox';
 
+import Label from '../../../src/components/Label';
+
 const InputSliderPage = () => {
 	return <div>
 		<h2>代码演示</h2>
 		<VerticalSeparation>
 		<GridList cols={6}>
 			<Input stype='QUDR'/>
-			<Input stype='QUDR' type='INT'/>
-			<Input stype='QUDR' type='FLOAT'/>
-			<Input stype='LINE'/>
+			<Input stype='QUDR' type='INT' before={<Label height='100%' content='before'/>}/>
+			<Input stype='QUDR' type='FLOAT' after={<Label height='100%' content='after'/>}/>
+			<Input stype='LINE' before={<Label height='100%' content='length'/>} after={<Label height='100%' content='mm'/>}/>
 			<Input stype='LINE' type='INT'/>
 			<Input stype='LINE' type='FLOAT'/>
 		</GridList>

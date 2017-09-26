@@ -10,7 +10,10 @@ class Label extends Component {
 		fontSize: PropTypes.number,
 		fontFamily: PropTypes.string,
 		color: PropTypes.string,
-		height: PropTypes.number,
+		height: PropTypes.oneOfType([
+			PropTypes.number,
+			PropTypes.string
+		]),
 		style: PropTypes.object
 	};
 
@@ -34,7 +37,7 @@ class Label extends Component {
 		} = this.props;
 
 		const parentStyle = {
-			display: 'table',
+			// display: 'table',
 			height: height,
 			overflow: 'hidden', 
 			textOverflow: 'ellipsis', 
@@ -43,7 +46,7 @@ class Label extends Component {
 
 		const defaultStyle = {
 			// display: 'table-cell',
-			verticalAlign: 'middle',
+			// verticalAlign: 'middle',
 			lineHeight: `${height}px`,
 			color: color,
 			fontSize: fontSize,

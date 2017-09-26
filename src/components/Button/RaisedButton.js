@@ -54,6 +54,7 @@ function getStyles(props, state) {
 	return {
 		root: {
 			display: props.fullWidth ? 'block' : 'inline-block',
+			verticalAlign: props.fullWidth ? 'baseline' : 'top',
 			position: 'relative',
 			boxSizing: 'border-box',
 			// border: 'none',
